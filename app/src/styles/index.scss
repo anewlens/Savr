@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+html {
+    font-size: 10px;
+}
+
+:root {
+    --background: hsl(226, 17%, 10%);
+    --background-light: hsl(226, 17%, 70%);
+    --background-light-2: hsl(226, 17%, 20%);
+
+    --magenta: hsl(340, 100%, 70%);
+
+    --cyan: hsl(189, 100%, 59%);
+
+    --orange: hsl(34, 100%, 68%);
+
+    --green: hsl(120, 100%, 69%);
+}

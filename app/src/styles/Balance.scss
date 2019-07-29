@@ -1,0 +1,53 @@
+.Balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: relative;
+    z-index: 50;
+
+    &-data {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    &-item {
+        display: flex;
+        flex-direction: column;
+
+        &:not(:last-child) {
+            margin-right: 5vw;
+        }
+
+    }
+
+    &-btn {
+        background-color: transparent;
+        width: 4.5rem;
+        border: none;
+        transition: all .1s ease-out;
+
+        cursor: pointer;
+
+        svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--cyan)
+        }
+
+        &:active {
+            transform: scale(.95);
+        }
+    }
+
+    &-label {
+        color: var(--background-light);
+        font-size: 1.6rem;
+    }
+
+    &-amount {
+        font-family: 'Oswald', sans-serif;
+        font-size: 2.6rem;
+        color: white;
+    }
+}
