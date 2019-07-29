@@ -11,7 +11,7 @@ const errorHandler = require('./utils/middleware')
 const mongoose = require('mongoose')
 
 
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true})
+mongoose.connect(config.MONGO_URI, {useNewUrlParser: true})
         .then(() => {
             console.log('Now connected to MongoDB')
         })

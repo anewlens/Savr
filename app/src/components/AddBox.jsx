@@ -11,6 +11,7 @@ const AddBox = ({submit, closeBox}) => {
     const handleVendor = e => setVendor(e.target.value)
     const handleAmount = e => setAmount(e.target.value)
     const handleCategory = e => setCategory(e.target.value)
+    const handleRecurring = e => setRecurring(!recurring)
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -104,7 +105,24 @@ const AddBox = ({submit, closeBox}) => {
                                     onChange={handleCategory}
                                     className="AddBox-input inputCategory" />
                     </span>
+                    
+                    <span className="AddBox-checkbox">
+                        <label 
+                            htmlFor="recurring" 
+                            className="AddBox-label">
+                            Recurring
+                        </label>
+                        <input
+                            type='checkbox'
+                            name='recurring'
+                            id='recurring'
+                            value='recurring'
+                            onChange={handleRecurring}
+                            className="Addbox-input inputRecurring"
+                            />
+                    </span>
                 </div>
+
 
                 
                 <input value='Add' type='submit' className="AddBox-submit"  />

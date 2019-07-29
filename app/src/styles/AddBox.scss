@@ -50,11 +50,18 @@
         }
     }
 
+    &-checkbox {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
     &-radios {
         display: flex;
         flex-direction: column;
 
         margin-top: 2rem;
+        margin-bottom: 2rem;
 
         &-line {
             display: flex;
@@ -64,6 +71,10 @@
 
             & > * {
                 margin-bottom: 2rem;
+            }
+
+            &:last-child {
+                border-bottom: 1px solid grey;
             }
         }
     }
