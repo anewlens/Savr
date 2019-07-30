@@ -54,6 +54,8 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        padding-top: 1rem;
+        border-top: 1px solid grey;
     }
 
     &-radios {
@@ -71,10 +73,6 @@
 
             & > * {
                 margin-bottom: 2rem;
-            }
-
-            &:last-child {
-                border-bottom: 1px solid grey;
             }
         }
     }
