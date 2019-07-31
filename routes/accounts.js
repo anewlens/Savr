@@ -45,7 +45,7 @@ accountRouter.post('/', async (req,res,next) => {
 
 accountRouter.post('/transaction', async (req, res, next) => {
     const { date, amount, vendor, category, recurring, userId } = req.body
-    const user = await User.findById(userId)
+    const account = await Account.findOne({ user: userId })
     const transaction = {
         date,
         amount,
@@ -53,13 +53,17 @@ accountRouter.post('/transaction', async (req, res, next) => {
         category,
         recurring
     }
-    const newBalance = user.currentBalance - amount
+
+    const newBalance = account.currentBalance - amount
 
     try {
         Account
             .updateOne(
-                { user: user }, 
-                { $push: { transactions: transaction } }
+                { user: userId }, 
+                { 
+                    $push: { transactions: transaction },
+                    $set: { currentBalance: newBalance }
+                }
             )
             .then(() => res.json(transaction))
         } catch(exception) {

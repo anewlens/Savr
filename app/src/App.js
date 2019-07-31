@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './styles/App.scss'
+import './styles/MediaQueries.scss'
 
 import currencyFormatter from './utils/CurrencyFormatter'
 import accountServices from './services/account'
@@ -34,8 +35,10 @@ function App() {
       .then(res => {
         setAccount({
             ...account,
+            currentBalance: account.currentBalance - newTransaction.amount,
             ...account.transactions.push(res.data)
         })
+
       })
   }
   
