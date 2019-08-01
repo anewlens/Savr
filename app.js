@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 
 const accountRouter = require('./routes/accounts')
+const loginRouter = require('./routes/login')
 const userRouter = require('./routes/users')
 
 const errorHandler = require('./utils/middleware')
@@ -20,7 +21,9 @@ mongoose.connect(config.MONGO_URI, {useNewUrlParser: true})
 app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
+
 app.use('/account', accountRouter)
+app.use('/login', loginRouter)
 app.use('/user', userRouter)
 
 app.use(errorHandler)

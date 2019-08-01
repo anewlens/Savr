@@ -1,6 +1,15 @@
 const accountRouter = require('express').Router()
+const jwt = require('jsonwebtoken')
 const Account = require('../models/account')
 const User = require('../models/user')
+
+const getTokenFrom = req => {
+    const authorization = req.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+        return authorization.substring(7)
+    }
+    return null
+}
 
 accountRouter.get('/', (req, res) => {
     Account
@@ -44,28 +53,31 @@ accountRouter.post('/', async (req,res,next) => {
 
 
 accountRouter.post('/transaction', async (req, res, next) => {
-    const { date, amount, vendor, category, recurring, userId } = req.body
-    const account = await Account.findOne({ user: userId })
-    const transaction = {
-        date,
-        amount,
-        vendor,
-        category,
-        recurring
-    }
-
-    const newBalance = account.currentBalance - amount
+    const { date, amount, vendor, category, recurring } = req.body
+    const token = getTokenFrom(req)
 
     try {
-        Account
-            .updateOne(
-                { user: userId }, 
-                { 
-                    $push: { transactions: transaction },
-                    $set: { currentBalance: newBalance }
-                }
-            )
-            .then(() => res.json(transaction))
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'Invalid or missing token.'})
+        }
+
+        const account = await Account.findOne({ user: decodedToken.id })
+        const transaction = {
+            date,
+            amount,
+            vendor,
+            category,
+            recurring,
+            user: decodedToken.id
+        }
+        
+        const newBalance = account.currentBalance - amount
+
+        account.transactions = account.transactions.concat(transaction)
+        account.currentBalance = newBalance
+        await account.save()
+        res.json(transaction)
         } catch(exception) {
             next(exception)
         }
