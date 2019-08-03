@@ -1,10 +1,35 @@
 import axios from 'axios'
 const baseUrl = '/account'
 
-const getAccount = () => axios.get(baseUrl)
+let token = null
 
-const addTransaction = newTransaction => axios.post(`${baseUrl}/transaction`, newTransaction)
+const setToken = newToken => {
+    token = `bearer ${newToken}`
+}
+
+const getAccount = async req => {
+        console.log('req', req)
+        await setToken(req.token)
+        const config = {
+            headers: { Authorization: token }
+        }
+
+        const request = axios.get(baseUrl, config)
+        return request
+            .then(response => response.data)
+            .catch(err => console.log('err', err))
+}
+
+const addTransaction = async newTransaction => {
+    const config = {
+        headers: { Authorization: token }
+    }
+
+    const res = await axios.post(`${baseUrl}/transaction`, newTransaction, config)
+    return res.data
+}
 export default {
     getAccount,
-    addTransaction
+    addTransaction,
+    setToken
 }

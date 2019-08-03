@@ -11,20 +11,25 @@ const getTokenFrom = req => {
     return null
 }
 
-accountRouter.get('/', (req, res) => {
-    Account
-        .find({})
-        .then(accounts => {
-            console.log(accounts)
-            res.json(accounts)
-        })
-        .catch(err => next(err))
-})
+accountRouter.get('/', (req, res, next) => {
+    const token = getTokenFrom(req)
 
-accountRouter.get('/:id', (req, res) => {
-    const id = req.params.id
-    const transaction = data.accounts.find(item => item.id == id)
-    res.json(transaction)
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'Invalid or missing token.'})
+        }
+
+        Account
+            .find({user: decodedToken.id})
+            .then(accounts => {
+                console.log(accounts)
+                res.json(accounts[0])
+            })
+            .catch(err => next(err))
+    } catch(exception) {
+        next(exception)
+    }
 })
 
 accountRouter.post('/', async (req,res,next) => {
@@ -77,6 +82,7 @@ accountRouter.post('/transaction', async (req, res, next) => {
         account.transactions = account.transactions.concat(transaction)
         account.currentBalance = newBalance
         await account.save()
+        
         res.json(transaction)
         } catch(exception) {
             next(exception)

@@ -17,12 +17,11 @@ const AddBox = ({submit, closeBox}) => {
         e.preventDefault()
         if (vendor && amount && category) {
             submit({
-                date: new Date('July 17, 2019 16:24:00'),
+                date: new Date().toDateString(),
                 amount: Number(amount),
                 vendor,
                 category,
-                recurring,
-                userId: '5d3bd68e26889110b46023af'
+                recurring
             })
 
             closeBox()

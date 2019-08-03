@@ -40,9 +40,7 @@ const Header = ({name, loggedIn, setLoggedIn, view, setView}) => {
                     className="Header-nav-links btn-lite">Account</button>
             </nav>
 
-            {loggedIn
-                ? <Profile name={name}/>
-                : <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
+            <Profile name={name}/>
             
         </header>
     )

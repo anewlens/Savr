@@ -20,13 +20,16 @@ const Transactions = ({transactions, loading, show}) => {
         return null
     }
     
+    const currentDate = new Date()
+
+
     return (
         shouldRender && (
             <section 
                 className="Transactions container"
                 style={{ animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`}}
                 onAnimationEnd={onAnimationEnd}>
-                <h1 className="Transactions-title container-title">July 2019</h1>
+                <h1 className="Transactions-title container-title">{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</h1>
                 {transactions.slice(0).reverse().map(item => <Item 
                                             vendor={item.vendor}
                                             amount={item.amount}

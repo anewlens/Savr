@@ -16,10 +16,10 @@ const Balance = ({balance, budget, spending, loading, addTransaction}) => {
     const budgetCalc = arr => 
         currencyFormatter.format(arr.map(i => i.amount).reduce((a,c) => a+c))
 
-    const spendingCalc = spending =>
-        currencyFormatter.format(spending.map(item => item.amount).reduce((a,c) => a+c))
-
-    useEffect(() => console.log('budget', budget))
+    const spendingCalc = spending => {
+        console.log('spending', spending)
+        return currencyFormatter.format(spending.map(item => item.amount).reduce((a,c) => a+c))
+    }
 
     return (
         <section className="Balance">
