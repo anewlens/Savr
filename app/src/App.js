@@ -20,6 +20,21 @@ function App() {
   const [view, setView] = useState('transactions')
   const [user, setUser] = useState(null)
 
+  useEffect(() => {
+    const LoggedInUserJSON = window.localStorage.getItem('LoggedInUser')
+    if (LoggedInUserJSON) {
+      const user = JSON.parse(LoggedInUserJSON)
+      setUser(user)
+      accountServices.setToken(user.token)
+      accountServices
+        .getAccount(user)
+        .then(res => {
+            setAccount(res)
+            setLoading(false)
+        })
+    }
+  }, [])
+
   const addItem = newTransaction => {
     accountServices
       .addTransaction(newTransaction)

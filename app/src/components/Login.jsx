@@ -27,6 +27,7 @@ const Login = ({loggedIn, setLoggedIn, user, setUser, setAccount, setLoading}) =
                 .then(res => {
                     console.log('user', user)
                     console.log('res', res)
+                    window.localStorage.setItem('LoggedInUser', JSON.stringify(user))
                     setUser(user)
                     accountServices.setToken(user.token)
                     setAccount(res)
