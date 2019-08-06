@@ -89,4 +89,29 @@ accountRouter.post('/transaction', async (req, res, next) => {
         }
 })
 
+accountRouter.post('/budget', async (req, res, next) => {
+    const { name, amount } = req.body
+    const token = getTokenFrom(req)
+
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'Invalid ormissing token.'})
+        }
+
+        const account = await Account.findOne({ user: decodedToken.id })
+        const category = {
+            name,
+            amount
+        }
+
+        account.monthlyBudget = account.monthlyBudget.concat(category)
+        await account.save()
+
+        res.json(category)
+    } catch(exception) {
+        next(exception)
+    }
+})
+
 module.exports = accountRouter

@@ -28,8 +28,19 @@ const addTransaction = async newTransaction => {
     const res = await axios.post(`${baseUrl}/transaction`, newTransaction, config)
     return res.data
 }
+
+const addBudget = async newBudget => {
+    const config = {
+        headers: { Authorization: token }
+    }
+
+    const res = await axios.post(`${baseUrl}/budget`, newBudget, config)
+    return res.data
+}
+
 export default {
     getAccount,
     addTransaction,
+    addBudget,
     setToken
 }
