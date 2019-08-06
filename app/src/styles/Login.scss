@@ -45,4 +45,19 @@
             color: var(--magenta);
         }
     }
+
+    &-create {
+        margin-top: 2rem;
+        background-color: transparent;
+        border: none;
+        color: grey;
+        font-size: 1.6rem;
+        transition: color .1s ease-out;
+
+        cursor: pointer;
+
+        &:hover {
+            color: white;
+        }
+    }
 }
