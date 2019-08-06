@@ -6,6 +6,7 @@ import {ReactComponent as Shopping} from '../images/svg/shopping-cart.svg'
 import {ReactComponent as Food} from '../images/svg/location-food.svg'
 import {ReactComponent as Entertainment} from '../images/svg/headphones.svg'
 import currencyFormatter from '../utils/CurrencyFormatter'
+import accountServices from '../services/account'
 
 import '../styles/Budget.scss'
 
@@ -13,6 +14,27 @@ const Budget = ({account, show}) => {
 
     const [shouldRender, setRender] = useState(false)
     const [budgets, setBudgets] = useState(account.monthlyBudget)
+    const [budgetName, setBudgetName ] = useState('')
+    const [budgetAmount, setBudgetAmount ] = useState('')
+
+    const handleNameChange = e => setBudgetName(e.target.value)
+    const handleAmountChange = e => setBudgetAmount(e.target.value)
+
+    const handleNewBudget = () => {
+        if (budgetName.length > 0 && budgetAmount.length > 0) {
+            const newBudget = {name: budgetName.toLowerCase(), amount: Number(budgetAmount)}
+            accountServices
+                .addBudget(newBudget)
+                .then(async res => {
+                    console.log('budgetRes', res)
+                    await setBudgets([
+                        ...budgets, newBudget
+                    ])
+                    setBudgetAmount('')
+                    setBudgetName('')
+                })
+        }
+    }
 
     useEffect(() => {
         console.log('budgets', budgets)
@@ -70,6 +92,7 @@ const Budget = ({account, show}) => {
                         <h3>Budget</h3>
                         <h3>Spent</h3>
                     </header>
+
                     {budgets.map(category => {
                         if (categorySpending(category.name).length === 0) {
                             return null
@@ -86,6 +109,27 @@ const Budget = ({account, show}) => {
                             </div>
                         )
                     })}
+
+                    <div className="Budget-data-line Budget-newCat">
+                        <input 
+                            type="text" 
+                            placeholder='Add New' 
+                            value={budgetName} 
+                            onChange={handleNameChange} 
+                            className="Budget-newCat-input"/>
+
+                        <span className='Budget-newCat-span'>
+                            <p>$</p>
+                            <input 
+                                type="number" 
+                                placeholder='000' 
+                                value={budgetAmount} 
+                                onChange={handleAmountChange} 
+                                className="Budget-newCat-input"/>
+                        </span>
+
+                        <button className="Budget-newCat-add" onClick={handleNewBudget}>Add</button>
+                    </div>
                 </div>
             </div>
         </section>
