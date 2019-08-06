@@ -22,3 +22,7 @@ html {
 
     --green: hsl(120, 100%, 69%);
 }
+
+body {
+    background-color: var(--background)
+}
