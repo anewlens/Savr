@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import '../styles/AddBox.scss'
 
-const AddBox = ({submit, closeBox}) => {
+const AddBox = ({budget, submit, closeBox}) => {
 
     const [vendor, setVendor] = useState('')
     const [amount, setAmount] = useState(null)
@@ -49,61 +49,23 @@ const AddBox = ({submit, closeBox}) => {
                     className="AddBox-input inputAmount"/>
                 
                 <div className="AddBox-radios">
-                    <span className='AddBox-radios-line'>
-                        <label 
-                            htmlFor="shopping" 
-                            className="AddBox-label">
-                                Shopping
-                        </label>
-                        <input type="radio"
-                            name="category" 
-                            id='shopping'
-                            value='shopping'
-                            onChange={handleCategory}
-                            className="AddBox-input inputCategory" />
-                    </span>
-
-                    <span className='AddBox-radios-line'>
-                        <label 
-                            htmlFor="entertainment" 
-                            className="AddBox-label">
-                                Entertainment
-                        </label>
+                    {budget.map(cat => {
+                        return (
+                            <span className='AddBox-radios-line'>
+                                <label 
+                                    htmlFor={cat.name} 
+                                    className="AddBox-label">
+                                        {cat.name}
+                                </label>
                                 <input type="radio"
                                     name="category" 
-                                    id='entertainment'
-                                    value='entertainment'
+                                    id={cat.name}
+                                    value={cat.name}
                                     onChange={handleCategory}
                                     className="AddBox-input inputCategory" />
-                    </span>
-
-                    <span className='AddBox-radios-line'>
-                        <label 
-                            htmlFor="food" 
-                            className="AddBox-label">
-                                Food
-                        </label>
-                                <input type="radio"
-                                    name="category" 
-                                    id='food'
-                                    value='food'
-                                    onChange={handleCategory}
-                                    className="AddBox-input inputCategory" />
-                    </span>
-
-                    <span className='AddBox-radios-line'>
-                        <label 
-                            htmlFor="rent" 
-                            className="AddBox-label">
-                                Rent
-                        </label>
-                                <input type="radio"
-                                    name="category" 
-                                    id='food'
-                                    value='rent'
-                                    onChange={handleCategory}
-                                    className="AddBox-input inputCategory" />
-                    </span>
+                            </span>
+                        )
+                    })}
                     
                     <span className="AddBox-checkbox">
                         <label 
