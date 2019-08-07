@@ -10,6 +10,8 @@ import {ReactComponent as Recurring} from '../images/svg/refresh.svg'
 
 const Item = ({date, amount, vendor, category, recurring}) => {
     
+    const timeStamp = new Date(`${date}`).toDateString()
+
     return (
         <div className="Transactions-item">
             <div className="Transactions-item-left">
@@ -32,7 +34,7 @@ const Item = ({date, amount, vendor, category, recurring}) => {
                 
                 <div className="Transactions-item-info">
                     <h3 className="Transactions-item-vendor">{vendor}</h3>
-                    <p className="Transactions-item-date">{date}</p>
+                    <p className="Transactions-item-date">{timeStamp}</p>
                 </div>
             </div>
 
