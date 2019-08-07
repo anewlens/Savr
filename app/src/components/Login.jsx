@@ -4,7 +4,7 @@ import loginServices from '../services/login'
 import accountServices from '../services/account'
 import userServices from '../services/user'
 
-const Login = ({loggedIn, setLoggedIn, user, setUser, setAccount, setLoading}) => {
+const Login = ({setUser, setAccount, setLoading}) => {
 
     const [view, setView] = useState('login')
     const [username, setUsername] = useState('')
@@ -12,9 +12,6 @@ const Login = ({loggedIn, setLoggedIn, user, setUser, setAccount, setLoading}) =
     const [errorMessage, setErrorMessage] = useState(null)
     const [confirmPassword, setConfirmPassword] = useState('')
     const [name, setName] = useState('')
-    const [balance, setBalance] = useState('')
-    const [budgets, setBudgets] = useState('')
-    const [income, setIncome] = useState('')
 
     const handleUsername = e => setUsername(e.target.value)
     const handlePassword = e => setPassword(e.target.value)
@@ -61,7 +58,12 @@ const Login = ({loggedIn, setLoggedIn, user, setUser, setAccount, setLoading}) =
             }
             await userServices
                     .addUser(user)
-                    .then(res => console.log(res))
+                    .then(res => {
+                        console.log(res)
+                        window.localStorage.setItem('LoggedInUser', JSON.stringify(res))
+                        accountServices.setToken(res.token)
+                        setUser(res)
+                    })
         } catch(exception) {
             console.log('exception', exception)
             setErrorMessage('Invalid username/password')
@@ -107,7 +109,7 @@ const Login = ({loggedIn, setLoggedIn, user, setUser, setAccount, setLoading}) =
                 
                 <p className="Login-error">{errorMessage}</p>
                 <button className="Login-submit btn-lite">
-                    {view === 'create' ? 'Sign up' : 'Log In'}
+                    {view === 'create' ? 'Next' : 'Log In'}
                 </button>
             </form>
 

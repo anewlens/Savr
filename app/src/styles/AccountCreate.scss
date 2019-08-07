@@ -1,0 +1,92 @@
+.AccountCreate {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-title {
+        margin-bottom: 2rem;
+        font-family: 'Oswald', 'Open Sans', sans-serif;
+        font-size: 7rem;
+        color: white;
+    }
+
+    &-form {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        &-1 {
+            margin-right: 5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-input {
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid grey;
+            font-size: 2rem;
+            color: white;
+
+            &[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            &[type="number"] {
+                -moz-appearance: textfield;
+            }
+        }
+
+        &-budgets {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-line {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+            color: white;
+            font-size: 2rem;
+
+            & > *:not(:last-child) {
+                margin-right: 1rem;
+            }
+        }
+
+        &-addBudget {
+            padding: 1rem 0;
+            margin-left: 1rem;
+            background-color: transparent;
+            border: none;
+            color: var(--cyan);
+            font-size: 2rem;
+        }
+
+        &-svg {
+            fill: var(--cyan);
+        }
+
+        &-submit {
+            border:none;
+            border-radius: 15px;
+            background-color: var(--cyan);
+            color: white;
+            font-size: 3rem;
+            flex-basis: 25%;
+        }
+    }
+}
+
+.dollarWrapper {
+    display: flex;
+    &:first-child {
+        margin-right: 1rem;
+    }
+}

@@ -6,6 +6,7 @@ import currencyFormatter from './utils/CurrencyFormatter'
 import accountServices from './services/account'
 
 import Login from './components/Login'
+import AccountCreate from './components/AccountCreate'
 import Header from './components/Header'
 import Balance from './components/Balance'
 import Transactions from './components/Transactions'
@@ -29,8 +30,10 @@ function App() {
       accountServices
         .getAccount(user)
         .then(res => {
+          console.log('user', user)
             setAccount(res)
             setLoading(false)
+            setLoggedIn(true)
         })
     }
   }, [])
@@ -47,15 +50,18 @@ function App() {
 
       })
   }
-  if (!account) {
+
+  if (!account && !user) {
     return <Login
-              loggedIn={loggedIn}
-              setLoggedIn={setLoggedIn}
-              user={user}
               setUser={setUser}
               setAccount={setAccount}
               setLoading={setLoading}/>
-  } else if (account) {
+  } else if (!account && user) {
+    return <AccountCreate 
+              user={user} 
+              setAccount={setAccount} 
+              setLoading={setLoading}/>
+  }  else if (account && user) {
     return (
       <div className="App">
         <Header 

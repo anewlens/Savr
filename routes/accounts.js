@@ -19,7 +19,7 @@ accountRouter.get('/', (req, res, next) => {
         if (!token || !decodedToken.id) {
             return res.status(401).json({ error: 'Invalid or missing token.'})
         }
-
+        console.log('id', decodedToken.id)
         Account
             .find({user: decodedToken.id})
             .then(accounts => {
@@ -33,23 +33,30 @@ accountRouter.get('/', (req, res, next) => {
 })
 
 accountRouter.post('/', async (req,res,next) => {
-    const { currentBalance, monthlyBudget, income, userId } = req.body
+    const { currentBalance, monthlyBudget, income } = req.body
+    const token = getTokenFrom(req)
     
-    const user = await User.findById(userId)
-    
-    const account = new Account({
-        name: user.name,
-        currentBalance,
-        monthlyBudget,
-        income,
-        transactions: [],
-        user: user._id
-    })
-
     try {
+        const decodedToken = await jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'Invalid or missing token.'})
+        }
+
+        console.log('newAccount user', decodedToken)
+        
+        const getUser = await User.findById(decodedToken.id)
+        const account = new Account({
+            name: getUser.name,
+            currentBalance,
+            monthlyBudget,
+            income,
+            transactions: [],
+            user: decodedToken.id
+        })
+    
         const newAccount = await account.save()
-        user.account = newAccount._id
-        await user.save()
+        getUser.account = newAccount._id
+        await getUser.save()
         res.json(newAccount.toJSON())
     } catch(exception) {
         next(exception)

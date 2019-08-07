@@ -18,7 +18,11 @@ const Balance = ({balance, budget, spending, loading, addTransaction}) => {
 
     const spendingCalc = spending => {
         console.log('spending', spending)
-        return currencyFormatter.format(spending.map(item => item.amount).reduce((a,c) => a+c))
+        if (spending.length < 1) {
+            return '-'
+        } else {
+            return currencyFormatter.format(spending.map(item => item.amount).reduce((a,c) => a+c))
+        }
     }
 
     return (
