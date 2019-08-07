@@ -69,6 +69,9 @@ function App() {
           setLoggedIn={setLoggedIn}
           view={view}
           setView={setView}
+          setUser={setUser}
+          setAccount={setAccount}
+          setLoading={setLoading}
           name={account.name}/>
         <main className="main">
           <Balance 

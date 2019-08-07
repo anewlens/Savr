@@ -5,7 +5,7 @@ import Login from './Login'
 import Profile from './profile'
 
 
-const Header = ({name, loggedIn, setLoggedIn, view, setView}) => {
+const Header = ({name, loggedIn, setLoggedIn, view, setView, setUser, setLoading, setAccount}) => {
 
     const viewHandler = e => {
         setView(e.target.value)
@@ -40,7 +40,13 @@ const Header = ({name, loggedIn, setLoggedIn, view, setView}) => {
                     className="Header-nav-links btn-lite">Account</button>
             </nav>
 
-            <Profile name={name}/>
+            <Profile 
+                name={name}
+                setLoggedIn={setLoggedIn}
+                setAccount={setAccount}
+                setUser={setUser}
+                setLoading={setLoading}
+                />
             
         </header>
     )
