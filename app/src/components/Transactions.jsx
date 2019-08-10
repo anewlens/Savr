@@ -27,7 +27,10 @@ const Transactions = ({transactions, loading, show}) => {
         shouldRender && (
             <section 
                 className="Transactions container"
-                style={{ animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`}}
+                style={{
+                    animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`,
+                    zIndex: '100'
+                }}
                 onAnimationEnd={onAnimationEnd}>
                 <h1 className="Transactions-title container-title">{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</h1>
                 {transactions.slice(0).reverse().map(item => <Item 

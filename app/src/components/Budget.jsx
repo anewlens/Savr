@@ -70,7 +70,10 @@ const Budget = ({account, show}) => {
         shouldRender && (
         <section 
             className="Budget container"
-            style={{ animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`}}
+            style={{
+                animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`,
+                zIndex: 100
+            }}
             onAnimationEnd={onAnimationEnd}>
             <h1 className="Budget-title container-title">Budget</h1>
             <div className="Budget-main">
