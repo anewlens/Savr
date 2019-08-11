@@ -20,7 +20,7 @@ const AccountCreate = ({user, setAccount, setLoading}) => {
     const handleBudgetAdd = e => {
         if (budgetName.length > 0 && budgetName.length > 0) {
             e.preventDefault()
-            setBudgets(budgets.concat({name: budgetName, amount: Number(budgetAmount)}))
+            setBudgets(budgets.concat({name: budgetName.toLowerCase(), amount: Number(budgetAmount)}))
             setBudgetAmount('')
             setBudgetName('')
         }

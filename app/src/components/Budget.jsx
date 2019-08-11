@@ -89,6 +89,7 @@ const Budget = ({account, show}) => {
                         labelPosition={70}
                         className='BudgetPieChart-graph' />
                 </div>
+                
                 <div className="Budget-data">
                     <header className="Budget-data-header">
                         <h3>Category</h3>
