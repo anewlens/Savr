@@ -29,7 +29,7 @@ const Transactions = ({transactions, loading, show}) => {
                 className="Transactions container"
                 style={{
                     animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`,
-                    zIndex: '100'
+                    zIndex: `${show ? '10' : "100"}`
                 }}
                 onAnimationEnd={onAnimationEnd}>
                 <h1 className="Transactions-title container-title">{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</h1>

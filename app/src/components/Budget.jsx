@@ -72,7 +72,7 @@ const Budget = ({account, show}) => {
             className="Budget container"
             style={{
                 animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`,
-                zIndex: 100
+                zIndex: `${show ? '10' : "100"}`
             }}
             onAnimationEnd={onAnimationEnd}>
             <h1 className="Budget-title container-title">Budget</h1>
@@ -89,7 +89,7 @@ const Budget = ({account, show}) => {
                         labelPosition={70}
                         className='BudgetPieChart-graph' />
                 </div>
-                
+
                 <div className="Budget-data">
                     <header className="Budget-data-header">
                         <h3>Category</h3>
