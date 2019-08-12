@@ -81,7 +81,7 @@ function App() {
             spending={account.transactions}
             addTransaction={addItem}/>
   
-          {view === 'account' && <Account />}
+          {view === 'account' && <Account account={account}/>}
   
           <Transactions
                 transactions={account.transactions}
