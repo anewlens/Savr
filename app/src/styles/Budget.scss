@@ -10,8 +10,9 @@
     &-data {
         width: 50%;
         display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-columns: 2fr 1fr 1fr .5fr;
         grid-template-rows: auto;
+        grid-column-gap: 1rem;
         align-items: center;
         justify-items: start;
 
@@ -27,16 +28,29 @@
         
         &-category {
             text-transform: capitalize;
+            grid-column-start: 1;
+        }
+
+        &-edit {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        &-svg {
+            fill: var(--background-light);
         }
     }
 
     &-newCat {
 
         &-input {
+            background: var(--white);
             padding-bottom: 1rem;
             border: none;
             border-bottom: 1px solid grey;
             max-width: 50%;
+            font-size: 2rem;
 
             &::placeholder {
                 font-size: 2rem;
@@ -60,27 +74,6 @@
             padding: .5rem 2rem;
         }
     }
-}
-
-.BudgetPieChart-graph {
-    height: 20.8vw;
-    width: 20.8vw;
-    
-}
-
-.PieChartLabel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    position: absolute;
-
-    width: 2rem;
-    height: 2rem;
-    
-    font-size: 3rem;
-    fill: white;
 }
 
 @keyframes fadeIn {
