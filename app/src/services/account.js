@@ -52,10 +52,20 @@ const addBudget = async newBudget => {
     return res.data
 }
 
+const editBudget = async newBudget => {
+    const config = {
+        headers: { Authorization: token }
+    }
+
+    const res = await axios.put(`${baseUrl}/budget`, newBudget, config)
+    return res.data
+}
+
 export default {
     getAccount,
     addAccount,
     addTransaction,
     addBudget,
+    editBudget,
     setToken
 }
