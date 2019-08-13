@@ -64,9 +64,6 @@ const Budget = ({account, show}) => {
                     </header>
 
                     {budgets.map(category => {
-                        if (categorySpending(category.name).length === 0) {
-                            return null
-                        }
                         return (
                             <Item category={category} categorySpending={categorySpending} budgets={budgets} setBudgets={setBudgets} />
                         )

@@ -45,7 +45,9 @@ const Item = ({category, categorySpending, setBudgets}) => {
             }
             
             <p className="Budget-data-spent">
-                {currencyFormatter.format(categorySpending(category.name)
+                {categorySpending(category.name).length === 0 
+                    ? '$0.00'
+                    : currencyFormatter.format(categorySpending(category.name)
                     .map(item => item.amount)
                     .reduce((a,c) => a+c))}
             </p>
