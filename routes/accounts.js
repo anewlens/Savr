@@ -23,7 +23,7 @@ accountRouter.get('/', (req, res, next) => {
         Account
             .find({user: decodedToken.id})
             .then(accounts => {
-                console.log(accounts)
+                console.log('accounts', accounts)
                 res.json(accounts[0])
             })
             .catch(err => next(err))
@@ -116,6 +116,30 @@ accountRouter.post('/budget', async (req, res, next) => {
         await account.save()
 
         res.json(category)
+    } catch(exception) {
+        next(exception)
+    }
+})
+
+accountRouter.put('/budget', async (req, res, next) => {
+    const { name, amount, id } = req.body
+    const token = getTokenFrom(req)
+
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'Invalid ormissing token.'})
+        }
+
+        const account = await Account.findOne({ user: decodedToken.id })
+        await Account.updateOne({'monthlyBudget._id': id},
+                        { $set: {
+                            'monthlyBudget.$.name': name,
+                            'monthlyBudget.$.amount': amount
+                        }}, err => console.log(err))
+        
+        await account.save()
+        res.json({name, amount, _id: id})
     } catch(exception) {
         next(exception)
     }

@@ -5,7 +5,7 @@ import { ReactComponent as Check } from '../images/svg/checkmark.svg'
 
 import accountServices from '../services/account'
 
-const Item = ({category, categorySpending}) => {
+const Item = ({category, categorySpending, setBudgets}) => {
 
     const [ edit, setEdit ] = useState(false)
     const [ name, setName ] = useState('')
@@ -19,7 +19,14 @@ const Item = ({category, categorySpending}) => {
             setName(category.name)
             setAmount(category.amount)
         } else if (edit) {
-            setEdit(!edit)
+            accountServices
+                .editBudget({name, amount, id: category._id})
+                .then(res => {
+                    console.log('edit res', res)
+                    setEdit(!edit)
+                    setName(res.name)
+                    setAmount(res.amount)
+                })
         }
     }
 

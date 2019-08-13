@@ -68,7 +68,7 @@ const Budget = ({account, show}) => {
                             return null
                         }
                         return (
-                            <Item category={category} categorySpending={categorySpending}/>
+                            <Item category={category} categorySpending={categorySpending} budgets={budgets} setBudgets={setBudgets} />
                         )
                     })}
 
