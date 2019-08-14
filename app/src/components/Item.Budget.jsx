@@ -16,7 +16,7 @@ const Item = ({category, categorySpending, setBudgets}) => {
     const handleEdit = () => {
         if (!edit) {
             setEdit(!edit)
-            setName(category.name)
+            setName(category.name.toLowerCase())
             setAmount(category.amount)
         } else if (edit) {
             accountServices

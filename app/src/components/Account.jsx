@@ -12,13 +12,16 @@ const Account = ({account}) => {
         console.log('Editted Name')
     }
 
-    const editIncome = newAmount => {
-        console.log('Editted Income')
-    }
-
     const editBalance = newAmount => {
         accountServices
             .editBalance(newAmount.includes('$') 
+                        ? {newAmount: Number(newAmount.slice(1))} 
+                        : {newAmount: Number(newAmount)})
+    }
+
+    const editIncome = newAmount => {
+        accountServices
+            .editIncome(newAmount.includes('$') 
                         ? {newAmount: Number(newAmount.slice(1))} 
                         : {newAmount: Number(newAmount)})
     }
@@ -29,7 +32,7 @@ const Account = ({account}) => {
             <div className="Account-subContainer">
                 <div className="Account-details">
                     <Item label='Name' data={account.name}  action={editName} />
-                    <Item label='Income' data={account.income || 'Income not entered.'}  action={editIncome} />
+                    <Item label='Income' data={account.income ? currencyFormatter.format(account.income) : 'Income not entered.'}  action={editIncome} />
                     <Item label='Monthly Budget' data={monthlyBudget()} />
                     <Item label='Balance' data={currencyFormatter.format(account.currentBalance)}  action={editBalance}/>
                 </div>
