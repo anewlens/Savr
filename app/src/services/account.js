@@ -61,11 +61,21 @@ const editBudget = async newBudget => {
     return res.data
 }
 
+const editBalance = async newBalance => {
+    const config = {
+        headers: { Authorization: token }
+    }
+
+    const res = await axios.put(`${baseUrl}/balance`, newBalance, config)
+    return res.data
+}
+
 export default {
     getAccount,
     addAccount,
     addTransaction,
     addBudget,
     editBudget,
+    editBalance,
     setToken
 }

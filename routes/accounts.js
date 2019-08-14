@@ -145,4 +145,26 @@ accountRouter.put('/budget', async (req, res, next) => {
     }
 })
 
+accountRouter.put('/balance', async (req, res, next) => {
+    const { newAmount} = req.body
+    const token = getTokenFrom(req)
+
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'Invalid ormissing token.'})
+        }
+
+        const account = await Account.findOneAndUpdate(
+                        { user: decodedToken.id },
+                        { currentBalance: newAmount },
+                        { new: true },
+                        err => console.log(err))
+        
+        res.json(account)
+    } catch(exception) {
+        next(exception)
+    }
+})
+
 module.exports = accountRouter

@@ -8,17 +8,31 @@
 
     &-details {
         padding: 2rem 0;
-        margin-right: 2rem;
+        margin-right: 25rem;
         display: flex;
         flex-direction: column;
         flex: 1;
 
         &-line {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr 1fr .1fr;
+            grid-column-gap:  1.5rem;
             align-items: center;
             font-size: 2rem;
             margin-bottom: 2rem;
+        }
+
+        &-data {
+            justify-self: flex-end;
+        }
+
+        &-edit {
+            background: transparent;
+            border: none;
+        }
+
+        &-svg {
+            fill: var(--background-light)
         }
     }
 
