@@ -3,6 +3,14 @@ const bcrypt = require('bcrypt')
 const userRouter = require('express').Router()
 const User = require('../models/user')
 
+const getTokenFrom = req => {
+    const authorization = req.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+        return authorization.substring(7)
+    }
+    return null
+}
+
 userRouter.post('/', async (req, res, next) => {
     try {
         const body = req.body
@@ -33,6 +41,30 @@ userRouter.post('/', async (req, res, next) => {
             })
 
     } catch (exception) {
+        next(exception)
+    }
+})
+
+userRouter.put('/name', async (req, res, next) => {
+    const { newName } = req.body
+    const token = getTokenFrom(req)
+
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'Invalid ormissing token.'})
+        }
+
+        const user = await User.findOneAndUpdate(
+            { _id: decodedToken.id },
+            { name: newName },
+            { new: true },
+            err => console.log(err)
+        )
+
+        res.send(`Name changed to ${newName}.`)
+
+    } catch(exception) {
         next(exception)
     }
 })

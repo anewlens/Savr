@@ -79,6 +79,15 @@ const editIncome = async newIncome => {
     return res.data
 }
 
+const editName = async newName => {
+    const config = {
+        headers: { Authorization: token }
+    }
+
+    const res = await axios.put(`${baseUrl}/name`, newName, config)
+    return res.data
+}
+
 export default {
     getAccount,
     addAccount,
@@ -87,5 +96,6 @@ export default {
     editBudget,
     editBalance,
     editIncome,
+    editName,
     setToken
 }

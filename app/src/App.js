@@ -4,6 +4,7 @@ import './styles/MediaQueries.scss'
 
 import currencyFormatter from './utils/CurrencyFormatter'
 import accountServices from './services/account'
+import userServices from './services/user'
 
 import Login from './components/Login'
 import AccountCreate from './components/AccountCreate'
@@ -27,6 +28,7 @@ function App() {
       const user = JSON.parse(LoggedInUserJSON)
       setUser(user)
       accountServices.setToken(user.token)
+      userServices.setToken(user.token)
       accountServices
         .getAccount(user)
         .then(res => {

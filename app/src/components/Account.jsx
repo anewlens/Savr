@@ -3,13 +3,15 @@ import currencyFormatter from '../utils/CurrencyFormatter'
 import Item from './Item.Account'
 import '../styles/Account.scss'
 import accountServices from '../services/account'
+import userServices from '../services/user'
 
 const Account = ({account}) => {
 
     const monthlyBudget = () => currencyFormatter.format(account.monthlyBudget.map(i => i.amount).reduce((a,c) => a+c))
 
     const editName= newName => {
-        console.log('Editted Name')
+        userServices.editName({newName: newName})
+        accountServices.editName({newName: newName})
     }
 
     const editBalance = newAmount => {
