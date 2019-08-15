@@ -1,14 +1,26 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import currencyFormatter from '../utils/CurrencyFormatter'
 import Item from './Item.Account'
 import '../styles/Account.scss'
 import accountServices from '../services/account'
 import userServices from '../services/user'
 
-const Account = ({account}) => {
+const Account = ({account, show}) => {
+
+    const [shouldRender, setRender] = useState(true)
+
+    useEffect(() => {
+        if (show) {
+            setTimeout(() => setRender(true), 200)
+        }
+      }, [show])
+
+    const onAnimationEnd = () => {
+        if (!show) setRender(false);
+    }
 
     const monthlyBudget = () => currencyFormatter.format(account.monthlyBudget.map(i => i.amount).reduce((a,c) => a+c))
-
+      
     const editName= newName => {
         userServices.editName({newName: newName})
         accountServices.editName({newName: newName})
@@ -16,20 +28,27 @@ const Account = ({account}) => {
 
     const editBalance = newAmount => {
         accountServices
-            .editBalance(newAmount.includes('$') 
-                        ? {newAmount: Number(newAmount.slice(1))} 
-                        : {newAmount: Number(newAmount)})
+        .editBalance(newAmount.includes('$') 
+        ? {newAmount: Number(newAmount.slice(1))} 
+        : {newAmount: Number(newAmount)})
     }
 
     const editIncome = newAmount => {
         accountServices
-            .editIncome(newAmount.includes('$') 
-                        ? {newAmount: Number(newAmount.slice(1))} 
-                        : {newAmount: Number(newAmount)})
+        .editIncome(newAmount.includes('$') 
+        ? {newAmount: Number(newAmount.slice(1))} 
+        : {newAmount: Number(newAmount)})
     }
 
     return (
-        <section className="Account container">
+        shouldRender && (
+            <section 
+            className="Account container"
+            style={{
+                animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`,
+                zIndex: `${show ? '10' : "100"}`
+            }}
+            onAnimationEnd={onAnimationEnd}>
             <h1 className="Account-title container-title">Account</h1>
             <div className="Account-subContainer">
                 <div className="Account-details">
@@ -49,6 +68,7 @@ const Account = ({account}) => {
                 </div>
             </div>
         </section>
+        )
     )
 }
 

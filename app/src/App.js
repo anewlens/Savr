@@ -83,8 +83,6 @@ function App() {
             spending={account.transactions}
             addTransaction={addItem}/>
   
-          {view === 'account' && <Account account={account}/>}
-  
           <Transactions
                 transactions={account.transactions}
                 loading={loading}
@@ -94,6 +92,10 @@ function App() {
                 account={account}
                 show={view === 'budget' ? true : false} />}
   
+          {!loading && <Account 
+                                  account={account} 
+                                  show={view === 'account' ? true : false}/>}
+        
         </main>
       </div>
     );
