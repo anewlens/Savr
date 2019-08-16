@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.522e1a18.chunk.css",
+    "main.js": "/static/js/main.9e9b8cda.chunk.js",
+    "main.js.map": "/static/js/main.9e9b8cda.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/js/2.2824c454.chunk.js": "/static/js/2.2824c454.chunk.js",
+    "static/js/2.2824c454.chunk.js.map": "/static/js/2.2824c454.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.d220676d6aa7caa22630c7091bc9d907.js": "/precache-manifest.d220676d6aa7caa22630c7091bc9d907.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.522e1a18.chunk.css.map": "/static/css/main.522e1a18.chunk.css.map",
+    "static/media/add-outline.c9b69a2e.svg": "/static/media/add-outline.c9b69a2e.svg",
+    "static/media/checkmark.52699758.svg": "/static/media/checkmark.52699758.svg",
+    "static/media/cheveron-outline-down.e5539ded.svg": "/static/media/cheveron-outline-down.e5539ded.svg",
+    "static/media/close-outline.85558c1c.svg": "/static/media/close-outline.85558c1c.svg",
+    "static/media/credit.3ba6f7e7.svg": "/static/media/credit.3ba6f7e7.svg",
+    "static/media/edit-pencil.0892dfc4.svg": "/static/media/edit-pencil.0892dfc4.svg",
+    "static/media/headphones.d96ba617.svg": "/static/media/headphones.d96ba617.svg",
+    "static/media/home.52e6e03e.svg": "/static/media/home.52e6e03e.svg",
+    "static/media/location-food.f56bd9ee.svg": "/static/media/location-food.f56bd9ee.svg",
+    "static/media/refresh.87c30513.svg": "/static/media/refresh.87c30513.svg",
+    "static/media/shopping-cart.9dc1c176.svg": "/static/media/shopping-cart.9dc1c176.svg"
+  }
+}
