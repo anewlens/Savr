@@ -134,6 +134,8 @@
 
     .Budget {
 
+        margin-bottom: -3rem;
+
         &-data {
 
             &-header {
@@ -144,18 +146,33 @@
                 font-size: 1.6rem;
             }
         }
+
+        &-newCat {
+
+            &-input {
+                font-size: 1.6rem;
+
+                &::placeholder {
+                    font-size: 1.6rem;
+                }
+            }
+        }
+    }
+
+    .Account {
+        margin-bottom: -3rem;
     }
 
 }
 
 @media screen and (max-width: 550px) {
     .main {
-        padding: 3rem 2rem 5rem 2rem;
+        padding: 2rem 2rem 5rem 2rem;
     }
 
     .container {
-        margin: 3rem 0rem 0 -2rem;
-        padding: 3rem;
+        margin: 2rem 0rem 0 -2rem;
+        padding: 2rem 3rem;
 
         &-title {
             font-size: 3rem;
@@ -169,6 +186,16 @@
 
         &-btn svg {
             width: 70%;
+        }
+    }
+
+    .Budget {
+        margin-bottom: -5rem;
+
+        &-newCat {
+            &-input {
+                max-width: 80px;
+            }
         }
     }
 
@@ -186,5 +213,9 @@
                 padding: .7rem;
             }
         }
+    }
+
+    .Account {
+        margin-bottom: -5rem;
     }
 }
