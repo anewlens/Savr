@@ -55,7 +55,7 @@ const Budget = ({account, show}) => {
             }}
             onAnimationEnd={onAnimationEnd}>
             <h1 className="Budget-title container-title">Budget</h1>
-            <div className="Budget-main">
+
                 <div className="Budget-data">
                     <header className="Budget-data-header">
                         <h3>Category</h3>
@@ -90,7 +90,7 @@ const Budget = ({account, show}) => {
                         <button className="Budget-newCat-add" onClick={handleNewBudget}>Add</button>
                     </div>
                 </div>
-            </div>
+
         </section>
         )
     )

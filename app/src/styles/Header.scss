@@ -38,7 +38,7 @@
     align-items: center;
 
     &-name {
-        font-size: 2.4rem;
+        font-size: var(--header-btn-font);
         color: var(--magenta);
     }
 
@@ -66,8 +66,8 @@
         &-svg {
             margin-left: 1.6rem;
             fill: grey;
-            width: 2.4rem;
-            height: 2.4rem;
+            width: var(--header-btn-font);
+            height: var(--header-btn-font);
         }
         
         &-logout {
@@ -91,7 +91,7 @@
     background-color: transparent;
     border: none;
 
-    font-size: 2.4rem;
+    font-size: var(--header-btn-font);
 
     cursor: pointer;
     
@@ -122,7 +122,7 @@
     border: 1px solid hsl(340, 100%, 70%);
     border-radius: 15px;
 
-    font-size: 2.4rem;
+    font-size: var(--header-btn-font);
     color: hsl(340, 100%, 70%);
 
     cursor: pointer;

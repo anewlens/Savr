@@ -40,7 +40,6 @@
 
         &-input {
             background: var(--white);
-            padding-bottom: 1rem;
             border: none;
             border-bottom: 1px solid grey;
             max-width: 50%;
@@ -53,9 +52,10 @@
 
         &-span {
             display: flex;
+            width: 70%;
 
             & p {
-                margin-right: 1rem;
+                margin-right: .2rem;
             }
         }
 

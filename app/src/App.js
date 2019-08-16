@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import './styles/App.scss'
-import './styles/MediaQueries.scss'
 
 import currencyFormatter from './utils/CurrencyFormatter'
 import accountServices from './services/account'
@@ -13,6 +12,7 @@ import Balance from './components/Balance'
 import Transactions from './components/Transactions'
 import Budget from './components/Budget'
 import Account from './components/Account'
+import './styles/MediaQueries.scss'
 
 function App() {
 
