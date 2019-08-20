@@ -1,5 +1,6 @@
 .AccountCreate {
     height: 100vh;
+    padding: 2rem 5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,12 +14,14 @@
     }
 
     &-form {
+        max-width: 100vw;
+        padding: 0 3rem;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        flex-wrap: wrap;
 
         &-1 {
-            margin-right: 5rem;
+            margin-bottom: 5rem;
             display: flex;
             flex-direction: column;
         }
@@ -76,6 +79,7 @@
         &-submit {
             border:none;
             border-radius: 15px;
+            padding: 1rem;
             background-color: var(--cyan);
             color: white;
             font-size: 3rem;

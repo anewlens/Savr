@@ -78,6 +78,18 @@
         width: 100vw;
     }
     
+
+    .AccountCreate {
+
+        &-form {
+            
+            &-input {
+                font-size: 1.6rem;
+            }
+        }
+        
+    }
+
     .Header {
         margin-bottom: 2.5rem;
         padding: 0 2.5rem;
@@ -176,6 +188,21 @@
 
         &-title {
             font-size: 3rem;
+        }
+    }
+
+    .AccountCreate {
+
+        &-form-input {
+            text-align: center;
+        }
+
+        &-form-submit {
+            font-size: 2rem;
+        }
+
+        &-form-line:last-child {
+            flex-direction: column;
         }
     }
 
