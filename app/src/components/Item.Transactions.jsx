@@ -1,6 +1,6 @@
 import React from 'react'
 
-import currencyFormatter from '../utils/CurrencyFormatter'
+import {currencyFormatter} from '../utils'
 
 import {ReactComponent as Rent} from '../images/svg/home.svg'
 import {ReactComponent as Shopping} from '../images/svg/shopping-cart.svg'

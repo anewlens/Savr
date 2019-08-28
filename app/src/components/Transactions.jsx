@@ -1,8 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
+import AccountContext from '../Context/Account'
 import '../styles/Transactions.scss'
 import Item from './Item.Transactions'
 
-const Transactions = ({transactions, loading, show}) => {
+const Transactions = ({loading, show}) => {
+
+    const {account} = useContext(AccountContext)
 
     const [shouldRender, setRender] = useState(true)
 
@@ -10,7 +13,7 @@ const Transactions = ({transactions, loading, show}) => {
         if (show) {
             setTimeout(() => setRender(true), 200)
         }
-      }, [show]);
+    }, [show]);
 
       const onAnimationEnd = () => {
         if (!show) setRender(false);
@@ -33,12 +36,17 @@ const Transactions = ({transactions, loading, show}) => {
                 }}
                 onAnimationEnd={onAnimationEnd}>
                 <h1 className="Transactions-title container-title">{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</h1>
-                {transactions.slice(0).reverse().map(item => <Item 
-                                            vendor={item.vendor}
-                                            amount={item.amount}
-                                            date={item.date}
-                                            category={item.category}
-                                            recurring={item.recurring} />)}
+                {
+                    account.transactions
+                        .slice(0)
+                        .reverse()
+                        .map(item => <Item 
+                                        vendor={item.vendor}
+                                        amount={item.amount}
+                                        date={item.date}
+                                        category={item.category}
+                                        recurring={item.recurring} />)
+                }
             </section>
         )
     )

@@ -1,11 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import currencyFormatter from '../utils/CurrencyFormatter'
+import React, {useState, useEffect, useContext} from 'react'
+import AccountContext from '../Context/Account'
+import {currencyFormatter} from '../utils'
 import Item from './Item.Account'
 import '../styles/Account.scss'
 import accountServices from '../services/account'
 import userServices from '../services/user'
 
-const Account = ({account, show}) => {
+const Account = ({show}) => {
+
+    const {account} = useContext(AccountContext)
 
     const [shouldRender, setRender] = useState(true)
 

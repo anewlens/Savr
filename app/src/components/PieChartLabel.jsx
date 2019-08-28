@@ -1,5 +1,5 @@
 import React from 'react'
-import currencyFormatter from '../utils/CurrencyFormatter';
+import {currencyFormatter} from '../utils';
 
 const PieChartLabel = ({data, dataIndex}) => {
 

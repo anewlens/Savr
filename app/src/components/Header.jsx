@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import AccountContext from '../Context/Account'
 import '../styles/Header.scss'
 
-import Login from './Login'
 import Profile from './profile'
 
+const Header = ({setLoggedIn, view, setView, setUser, setLoading}) => {
 
-const Header = ({name, loggedIn, setLoggedIn, view, setView, setUser, setLoading, setAccount}) => {
+    const {account, setAccount} = useContext(AccountContext)
 
     const viewHandler = e => {
         setView(e.target.value)
@@ -41,7 +42,7 @@ const Header = ({name, loggedIn, setLoggedIn, view, setView, setUser, setLoading
             </nav>
 
             <Profile 
-                name={name}
+                name={account.name}
                 setLoggedIn={setLoggedIn}
                 setAccount={setAccount}
                 setUser={setUser}

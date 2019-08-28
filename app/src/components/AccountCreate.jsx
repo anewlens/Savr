@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import '../styles/AccountCreate.scss'
 
 import accountServices from '../services/account'
-import { ReactComponent as Plus } from '../images/svg/add-outline.svg'
 
 const AccountCreate = ({user, setAccount, setLoading}) => {
 

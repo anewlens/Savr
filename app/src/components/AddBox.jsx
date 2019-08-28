@@ -1,7 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import AccountContext from '../Context/Account'
 import '../styles/AddBox.scss'
 
-const AddBox = ({budget, submit, closeBox}) => {
+const AddBox = ({submit, closeBox}) => {
+
+    const {account} = useContext(AccountContext)
 
     const [vendor, setVendor] = useState('')
     const [amount, setAmount] = useState(null)
@@ -49,7 +52,7 @@ const AddBox = ({budget, submit, closeBox}) => {
                     className="AddBox-input inputAmount"/>
                 
                 <div className="AddBox-radios">
-                    {budget.map(cat => {
+                    {account.monthlyBudget.map(cat => {
                         return (
                             <span className='AddBox-radios-line'>
                                 <label 

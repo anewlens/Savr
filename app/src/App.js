@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
+
 import './styles/App.scss'
 
-import currencyFormatter from './utils/CurrencyFormatter'
+import { AccountProvider } from './Context/Account'
+
 import accountServices from './services/account'
 import userServices from './services/user'
 
@@ -24,11 +26,14 @@ function App() {
 
   useEffect(() => {
     const LoggedInUserJSON = window.localStorage.getItem('LoggedInUser')
+
     if (LoggedInUserJSON) {
       const user = JSON.parse(LoggedInUserJSON)
+
       setUser(user)
       accountServices.setToken(user.token)
       userServices.setToken(user.token)
+
       accountServices
         .getAccount(user)
         .then(res => {
@@ -66,37 +71,31 @@ function App() {
   }  else if (account && user) {
     return (
       <div className="App">
-        <Header 
-          loggedIn={loggedIn}
-          setLoggedIn={setLoggedIn}
-          view={view}
-          setView={setView}
-          setUser={setUser}
-          setAccount={setAccount}
-          setLoading={setLoading}
-          name={account.name}/>
-        <main className="main">
-          <Balance 
-            loading={loading}
-            balance={currencyFormatter.format(account.currentBalance)}
-            budget={account.monthlyBudget}
-            spending={account.transactions}
-            addTransaction={addItem}/>
-  
-          <Transactions
-                transactions={account.transactions}
-                loading={loading}
-                show={view === 'transactions' ? true : false} />
-  
-          {!loading && <Budget
-                account={account}
-                show={view === 'budget' ? true : false} />}
-  
-          {!loading && <Account 
-                                  account={account} 
-                                  show={view === 'account' ? true : false}/>}
-        
-        </main>
+        <AccountProvider value={{account, setAccount}}>
+          <Header 
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+            view={view}
+            setView={setView}
+            setUser={setUser}
+            setLoading={setLoading}
+            />
+          <main className="main">
+            <Balance 
+              loading={loading}
+              addTransaction={addItem}/>
+    
+            <Transactions
+                  loading={loading}
+                  show={view === 'transactions' ? true : false} />
+    
+            {!loading && <Budget
+                  show={view === 'budget' ? true : false} />}
+    
+            {!loading && <Account 
+                  show={view === 'account' ? true : false}/>}
+          </main>
+        </AccountProvider>
       </div>
     );
   }

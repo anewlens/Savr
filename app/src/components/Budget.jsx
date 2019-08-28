@@ -1,11 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import AccountContext from '../Context/Account'
 import Item from '../components/Item.Budget'
 
 import accountServices from '../services/account'
 
 import '../styles/Budget.scss'
 
-const Budget = ({account, show}) => {
+const Budget = ({show}) => {
+
+    const {account} = useContext(AccountContext)
 
     const [shouldRender, setRender] = useState(false)
     const [budgets, setBudgets] = useState(account.monthlyBudget)
@@ -32,8 +35,6 @@ const Budget = ({account, show}) => {
     }
 
     useEffect(() => {
-        console.log('budgets', budgets)
-        console.log('transactions', account.transactions)
         if (show) {
             setTimeout(() => setRender(true), 200)
         };

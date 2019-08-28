@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import currencyFormatter from '../utils/CurrencyFormatter'
+import {currencyFormatter} from '../utils'
 import { ReactComponent as Edit } from '../images/svg/edit-pencil.svg'
 import { ReactComponent as Check } from '../images/svg/checkmark.svg'
 
