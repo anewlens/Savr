@@ -5,7 +5,7 @@ import { ReactComponent as Check } from '../images/svg/checkmark.svg'
 
 import accountServices from '../services/account'
 
-const Item = ({category, categorySpending, setBudgets}) => {
+const Item = ({category, categorySpending}) => {
 
     const [ edit, setEdit ] = useState(false)
     const [ name, setName ] = useState('')

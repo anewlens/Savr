@@ -1,4 +1,8 @@
 import React, {useState} from 'react'
+import {connect} from 'react-redux'
+
+import { setAccount } from '../redux/account/account.actions'
+
 import '../styles/AccountCreate.scss'
 
 import accountServices from '../services/account'
@@ -107,4 +111,8 @@ const AccountCreate = ({user, setAccount, setLoading}) => {
     )
 }
 
-export default AccountCreate
+const mapDispatchToProps = dispatch => ({
+    setAccount: account => dispatch(setAccount(account))
+})
+
+export default connect(null, mapDispatchToProps)(AccountCreate)

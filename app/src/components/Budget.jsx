@@ -70,8 +70,7 @@ const Budget = ({ monthlyBudgets, transactions, show}) => {
                                 <Item 
                                     category={category} 
                                     categorySpending={categorySpending} 
-                                    budgets={monthlyBudgets} 
-                                    setBudgets={setBudgets} />
+                                    budgets={monthlyBudgets} />
                             )
                     }
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
+import { setAccount} from '../redux/account/account.actions'
 import { selectName } from '../redux/account/account.selectors'
 
 import { ReactComponent as DownArr } from '../images/svg/cheveron-outline-down.svg'
@@ -43,4 +44,8 @@ const mapStateToProps = state => ({
     name: selectName(state)
 })
 
-export default connect(mapStateToProps)(Profile)
+const mapDispatchToProps = dispatch => ({
+    setAccount: account => dispatch(setAccount(account))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

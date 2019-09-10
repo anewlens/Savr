@@ -1,8 +1,13 @@
 import React, {useState} from 'react'
-import '../styles/Login.scss'
+import { connect } from 'react-redux'
+
 import loginServices from '../services/login'
 import accountServices from '../services/account'
 import userServices from '../services/user'
+
+import { setAccount } from '../redux/account/account.actions'
+
+import '../styles/Login.scss'
 
 const Login = ({setUser, setAccount, setLoading}) => {
 
@@ -120,4 +125,8 @@ const Login = ({setUser, setAccount, setLoading}) => {
     )
 }
 
-export default Login
+const mapDispatchToProps = dispatch => ({
+    setAccount: account => dispatch(setAccount(account))
+})
+
+export default connect(null, mapDispatchToProps)(Login)

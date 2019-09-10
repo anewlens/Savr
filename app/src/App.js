@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import './styles/App.scss'
 
-import { getAccount } from './redux/account/account.actions'
+import { setAccount } from './redux/account/account.actions'
 import { selectAccount } from './redux/account/account.selectors'
 
 import accountServices from './services/account'
@@ -18,9 +18,8 @@ import Budget from './components/Budget'
 import Account from './components/Account'
 import './styles/MediaQueries.scss'
 
-function App({getAccount}) {
+function App({account, setAccount}) {
 
-  const [account, setAccount] = useState(null)
   const [loggedIn, setLoggedIn] = useState(false)
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState('transactions')
@@ -40,7 +39,6 @@ function App({getAccount}) {
         .getAccount(user)
         .then(res => {
           console.log('user', user)
-            getAccount(res)
             setAccount(res)
             setLoading(false)
             setLoggedIn(true)
@@ -64,12 +62,10 @@ function App({getAccount}) {
   if (!account && !user) {
     return <Login
               setUser={setUser}
-              setAccount={setAccount}
               setLoading={setLoading}/>
   } else if (!account && user) {
     return <AccountCreate 
               user={user} 
-              setAccount={setAccount} 
               setLoading={setLoading}/>
   }  else if (account && user) {
     return (
@@ -107,7 +103,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getAccount: account => dispatch(getAccount(account)) 
+  setAccount: account => dispatch(setAccount(account)) 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

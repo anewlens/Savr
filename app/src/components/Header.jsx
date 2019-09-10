@@ -1,16 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 
 import { selectName } from '../redux/account/account.selectors'
-import AccountContext from '../Context/Account'
 
 import '../styles/Header.scss'
 
 import Profile from './profile'
 
 const Header = ({setLoggedIn, view, setView, setUser, setLoading}) => {
-
-    const {account, setAccount} = useContext(AccountContext)
 
     const viewHandler = e => {
         setView(e.target.value)
@@ -47,7 +44,6 @@ const Header = ({setLoggedIn, view, setView, setUser, setLoading}) => {
 
             <Profile 
                 setLoggedIn={setLoggedIn}
-                setAccount={setAccount}
                 setUser={setUser}
                 setLoading={setLoading}
                 />

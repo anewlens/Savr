@@ -1,6 +1,6 @@
 import AccountActionTypes from './account.types'
 
-export const getAccount = account => ({
+export const setAccount = account => ({
     type: AccountActionTypes.SET_ACCOUNT,
     payload: account
 })

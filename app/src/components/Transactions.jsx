@@ -6,7 +6,6 @@ import Item from './Item.Transactions'
 
 const Transactions = ({loading, show, transactions}) => {
 
-
     const [shouldRender, setRender] = useState(true)
 
     useEffect(() => {
