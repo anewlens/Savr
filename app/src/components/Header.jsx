@@ -7,6 +7,8 @@ import { setUser } from '../redux/user/user.actions'
 import '../styles/Header.scss'
 
 import Profile from './profile'
+import { setView } from '../redux/view/view.actions'
+import { selectView } from '../redux/view/view.selectors'
 
 const Header = ({ view, setView}) => {
 
@@ -50,11 +52,13 @@ const Header = ({ view, setView}) => {
 }
 
 const mapStateToProps = state => ({
-    name: selectName(state)
+    name: selectName(state),
+    view: selectView(state)
 })
 
 const mapDispatchToProps = dispatch => ({
-    setUser: user => dispatch(setUser(user))
+    setUser: user => dispatch(setUser(user)),
+    setView: view => dispatch(setView(view))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

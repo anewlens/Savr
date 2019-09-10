@@ -47,7 +47,7 @@ const Balance = ({balance, totalBudget, totalSpending, loading, addTransaction})
             </button>
 
             {
-                addItemBox ? <AddBox closeBox={handleOpenItemBox} submit={addTransaction} /> : null
+                addItemBox ? <AddBox closeBox={handleOpenItemBox} /> : null
             }
 
         </section>
