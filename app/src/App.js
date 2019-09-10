@@ -11,6 +11,8 @@ import { selectLoggedIn } from './redux/loggedIn/loggedIn.selectors'
 import { toggleLoggedIn } from './redux/loggedIn/loggedIn.actions'
 import { selectLoading } from './redux/loading/loading.selectors'
 import { toggleLoading } from './redux/loading/loading.actions'
+import { selectView } from './redux/view/view.selectors';
+import { setView } from './redux/view/view.actions';
 
 import accountServices from './services/account'
 import userServices from './services/user'
@@ -24,11 +26,10 @@ import Budget from './components/Budget'
 import Account from './components/Account'
 import './styles/MediaQueries.scss'
 
-function App({account, loading, toggleLoading, setAccount, user, setUser}) {
-
-  const [view, setView] = useState('transactions')
+function App({account, loading, toggleLoading, setAccount, user, setUser, view}) {
 
   useEffect(() => {
+    //Check Local Storage for user
     const LoggedInUserJSON = window.localStorage.getItem('LoggedInUser')
 
     if (LoggedInUserJSON) {
@@ -49,19 +50,6 @@ function App({account, loading, toggleLoading, setAccount, user, setUser}) {
     }
   }, [])
 
-  const addItem = newTransaction => {
-    accountServices
-      .addTransaction(newTransaction)
-      .then(async res => {
-        await setAccount({
-            ...account,
-            currentBalance: account.currentBalance - newTransaction.amount,
-            ...account.transactions.push(res)
-        })
-
-      })
-  }
-
   if (!account && !user) {
     return <Login />
   } else if (!account && user) {
@@ -69,13 +57,9 @@ function App({account, loading, toggleLoading, setAccount, user, setUser}) {
   }  else if (account && user) {
     return (
       <div className="App">
-          <Header 
-            view={view}
-            setView={setView}
-            />
+          <Header />
           <main className="main">
-            <Balance 
-              addTransaction={addItem}/>
+            <Balance />
     
             <Transactions
                   show={view === 'transactions' ? true : false} />
@@ -95,14 +79,16 @@ const mapStateToProps = state => ({
   account: selectAccount(state),
   user: selectUser(state),
   loggedIn: selectLoggedIn(state),
-  loading: selectLoading(state)
+  loading: selectLoading(state),
+  view: selectView(state)
 })
 
 const mapDispatchToProps = dispatch => ({
   setAccount: account => dispatch(setAccount(account)),
   setUser: user => dispatch(setUser(user)),
   toggleLoggedIn: () => dispatch(toggleLoggedIn()),
-  toggleLoading: () => dispatch(toggleLoading())
+  toggleLoading: () => dispatch(toggleLoading()),
+  setView: view => dispatch(setView(view))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,9 +1,13 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import '../styles/AddBox.scss'
-import { selectMonthlyBudgets } from '../redux/account/account.selectors'
 
-const AddBox = ({monthlyBudgets, submit, closeBox}) => {
+import { selectMonthlyBudgets } from '../redux/account/account.selectors'
+import { addTransaction } from '../redux/account/account.actions'
+
+import accountServices from '../services/account'
+import '../styles/AddBox.scss'
+
+const AddBox = ({monthlyBudgets, closeBox, addTransaction}) => {
 
     const [vendor, setVendor] = useState('')
     const [amount, setAmount] = useState(null)
@@ -15,10 +19,18 @@ const AddBox = ({monthlyBudgets, submit, closeBox}) => {
     const handleCategory = e => setCategory(e.target.value)
     const handleRecurring = e => setRecurring(!recurring)
 
-    const handleSubmit = e => {
+    const addItem = newTransaction => {
+        accountServices
+          .addTransaction(newTransaction)
+          .then(async res => {
+            await addTransaction(res)
+          })
+      }
+
+      const handleSubmit = e => {
         e.preventDefault()
         if (vendor && amount && category) {
-            submit({
+            addItem({
                 date: new Date().toDateString(),
                 amount: Number(amount),
                 vendor,
@@ -29,6 +41,7 @@ const AddBox = ({monthlyBudgets, submit, closeBox}) => {
             closeBox()
         }
     }
+
 
     return (
         <div className="AddBox">
@@ -96,4 +109,8 @@ const mapStateToProps = state => ({
     monthlyBudgets: selectMonthlyBudgets(state)
 })
 
-export default connect(mapStateToProps)(AddBox)
+const mapDispatchToProps = dispatch => ({
+    addTransaction: transaction => dispatch(addTransaction(transaction))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddBox)
