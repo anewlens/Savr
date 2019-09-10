@@ -1,17 +1,16 @@
-import React, {useState, useEffect, useContext} from 'react'
-import AccountContext from '../Context/Account'
+import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
+import { selectMonthlyBudgets, selectTransactions } from '../redux/account/account.selectors'
 import Item from '../components/Item.Budget'
 
 import accountServices from '../services/account'
 
 import '../styles/Budget.scss'
 
-const Budget = ({show}) => {
-
-    const {account} = useContext(AccountContext)
+const Budget = ({ monthlyBudgets, transactions, show}) => {
 
     const [shouldRender, setRender] = useState(false)
-    const [budgets, setBudgets] = useState(account.monthlyBudget)
+    const [budgets, setBudgets] = useState(monthlyBudgets)
     const [budgetName, setBudgetName ] = useState('')
     const [budgetAmount, setBudgetAmount ] = useState('')
 
@@ -26,7 +25,7 @@ const Budget = ({show}) => {
                 .then(async res => {
                     console.log('budgetRes', res)
                     await setBudgets([
-                        ...budgets, newBudget
+                        ...monthlyBudgets, newBudget
                     ])
                     setBudgetAmount('')
                     setBudgetName('')
@@ -44,7 +43,7 @@ const Budget = ({show}) => {
         if (!show) setRender(false);
       }
 
-    const categorySpending = categoryName => account.transactions.filter(item => item.category === categoryName)
+    const categorySpending = categoryName => transactions.filter(item => item.category === categoryName)
 
     return (
         shouldRender && (
@@ -55,6 +54,7 @@ const Budget = ({show}) => {
                 zIndex: `${show ? '10' : "100"}`
             }}
             onAnimationEnd={onAnimationEnd}>
+
             <h1 className="Budget-title container-title">Budget</h1>
 
                 <div className="Budget-data">
@@ -64,11 +64,16 @@ const Budget = ({show}) => {
                         <h3>Spent</h3>
                     </header>
 
-                    {budgets.map(category => {
-                        return (
-                            <Item category={category} categorySpending={categorySpending} budgets={budgets} setBudgets={setBudgets} />
-                        )
-                    })}
+                    {
+                        monthlyBudgets
+                            .map(category => 
+                                <Item 
+                                    category={category} 
+                                    categorySpending={categorySpending} 
+                                    budgets={monthlyBudgets} 
+                                    setBudgets={setBudgets} />
+                            )
+                    }
 
                     <div className="Budget-data-line Budget-newCat">
                         <input 
@@ -97,4 +102,9 @@ const Budget = ({show}) => {
     )
 }
 
-export default Budget
+const mapStateToProps = state => ({
+    monthlyBudgets: selectMonthlyBudgets(state),
+    transactions: selectTransactions(state)
+})
+
+export default connect(mapStateToProps)(Budget)

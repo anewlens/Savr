@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+
+import { selectName } from '../redux/account/account.selectors'
+
 import { ReactComponent as DownArr } from '../images/svg/cheveron-outline-down.svg'
 import { ReactComponent as Xbtn } from '../images/svg/close-outline.svg'
 
@@ -35,4 +39,8 @@ const Profile = ({name, setLoggedIn, setAccount, setUser, setLoading}) => {
     )
 }
 
-export default Profile
+const mapStateToProps = state => ({
+    name: selectName(state)
+})
+
+export default connect(mapStateToProps)(Profile)

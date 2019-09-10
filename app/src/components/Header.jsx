@@ -1,5 +1,9 @@
 import React, { useContext } from 'react'
+import {connect} from 'react-redux'
+
+import { selectName } from '../redux/account/account.selectors'
 import AccountContext from '../Context/Account'
+
 import '../styles/Header.scss'
 
 import Profile from './profile'
@@ -42,7 +46,6 @@ const Header = ({setLoggedIn, view, setView, setUser, setLoading}) => {
             </nav>
 
             <Profile 
-                name={account.name}
                 setLoggedIn={setLoggedIn}
                 setAccount={setAccount}
                 setUser={setUser}
@@ -53,4 +56,8 @@ const Header = ({setLoggedIn, view, setView, setUser, setLoading}) => {
     )
 }
 
-export default Header
+const mapStateToProps = state => ({
+    name: selectName(state)
+})
+
+export default connect(mapStateToProps)(Header)

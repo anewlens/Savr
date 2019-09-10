@@ -1,10 +1,9 @@
-import React, {useState, useContext} from 'react'
-import AccountContext from '../Context/Account'
+import React, {useState} from 'react'
+import { connect } from 'react-redux'
 import '../styles/AddBox.scss'
+import { selectMonthlyBudgets } from '../redux/account/account.selectors'
 
-const AddBox = ({submit, closeBox}) => {
-
-    const {account} = useContext(AccountContext)
+const AddBox = ({monthlyBudgets, submit, closeBox}) => {
 
     const [vendor, setVendor] = useState('')
     const [amount, setAmount] = useState(null)
@@ -52,7 +51,7 @@ const AddBox = ({submit, closeBox}) => {
                     className="AddBox-input inputAmount"/>
                 
                 <div className="AddBox-radios">
-                    {account.monthlyBudget.map(cat => {
+                    {monthlyBudgets.map(cat => {
                         return (
                             <span className='AddBox-radios-line'>
                                 <label 
@@ -86,14 +85,15 @@ const AddBox = ({submit, closeBox}) => {
                             />
                     </span>
                 </div>
-
-
                 
                 <input value='Add' type='submit' className="AddBox-submit"  />
             </form>
         </div>
     )
-
 }
 
-export default AddBox
+const mapStateToProps = state => ({
+    monthlyBudgets: selectMonthlyBudgets(state)
+})
+
+export default connect(mapStateToProps)(AddBox)

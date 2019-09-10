@@ -1,14 +1,20 @@
-import React, {useState, useEffect, useContext} from 'react'
-import AccountContext from '../Context/Account'
+import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
+
+import {
+        selectTransactions,
+        selectBalance,
+        selectIncome, 
+        selectName, 
+        selectTotalBudget} from '../redux/account/account.selectors'
 import {currencyFormatter} from '../utils'
+
 import Item from './Item.Account'
 import '../styles/Account.scss'
 import accountServices from '../services/account'
 import userServices from '../services/user'
 
-const Account = ({show}) => {
-
-    const {account} = useContext(AccountContext)
+const Account = ({show, totalBudget, name, income, balance, transactions}) => {
 
     const [shouldRender, setRender] = useState(true)
 
@@ -21,8 +27,6 @@ const Account = ({show}) => {
     const onAnimationEnd = () => {
         if (!show) setRender(false);
     }
-
-    const monthlyBudget = () => currencyFormatter.format(account.monthlyBudget.map(i => i.amount).reduce((a,c) => a+c))
       
     const editName= newName => {
         userServices.editName({newName: newName})
@@ -55,16 +59,16 @@ const Account = ({show}) => {
             <h1 className="Account-title container-title">Account</h1>
             <div className="Account-subContainer">
                 <div className="Account-details">
-                    <Item label='Name' data={account.name}  action={editName} />
-                    <Item label='Income' data={account.income ? currencyFormatter.format(account.income) : 'Income not entered.'}  action={editIncome} />
-                    <Item label='Monthly Budget' data={monthlyBudget()} />
-                    <Item label='Balance' data={currencyFormatter.format(account.currentBalance)}  action={editBalance}/>
+                    <Item label='Name' data={name}  action={editName} />
+                    <Item label='Income' data={income}  action={editIncome} />
+                    <Item label='Monthly Budget' data={totalBudget} />
+                    <Item label='Balance' data={balance}  action={editBalance}/>
                 </div>
 
                 <div className="Account-recurring">
                     <h3 className="Account-recurring-title">Recurring Payments</h3>
                     {
-                        account.transactions
+                        transactions
                             .filter(item => item.recurring === true)
                             .map(item => <data className="Account-recurring-item"><label className='Account-label'>{item.vendor}:</label>{currencyFormatter.format(item.amount)}</data>)
                     } 
@@ -75,4 +79,12 @@ const Account = ({show}) => {
     )
 }
 
-export default Account
+const mapStateToProps = state => ({
+    totalBudget: selectTotalBudget(state),
+    name: selectName(state),
+    income: selectIncome(state),
+    balance: selectBalance(state),
+    transactions: selectTransactions(state)
+})
+
+export default connect(mapStateToProps)(Account)

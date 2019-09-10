@@ -1,11 +1,11 @@
-import React, {useEffect, useState, useContext} from 'react'
-import AccountContext from '../Context/Account'
+import React, {useEffect, useState} from 'react'
+import { connect } from 'react-redux'
+import { selectTransactions } from '../redux/account/account.selectors'
 import '../styles/Transactions.scss'
 import Item from './Item.Transactions'
 
-const Transactions = ({loading, show}) => {
+const Transactions = ({loading, show, transactions}) => {
 
-    const {account} = useContext(AccountContext)
 
     const [shouldRender, setRender] = useState(true)
 
@@ -25,7 +25,6 @@ const Transactions = ({loading, show}) => {
     
     const currentDate = new Date()
 
-
     return (
         shouldRender && (
             <section 
@@ -37,10 +36,11 @@ const Transactions = ({loading, show}) => {
                 onAnimationEnd={onAnimationEnd}>
                 <h1 className="Transactions-title container-title">{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</h1>
                 {
-                    account.transactions
+                    transactions
                         .slice(0)
                         .reverse()
                         .map(item => <Item 
+                                        key={item.id}
                                         vendor={item.vendor}
                                         amount={item.amount}
                                         date={item.date}
@@ -52,4 +52,8 @@ const Transactions = ({loading, show}) => {
     )
 }
 
-export default Transactions
+const mapStateToProps = state => ({
+    transactions: selectTransactions(state)
+})
+
+export default connect(mapStateToProps)(Transactions)

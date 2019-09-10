@@ -1,15 +1,21 @@
-import React, {useState, useContext } from 'react'
-import AccountContext from '../Context/Account'
+import React, {useState} from 'react'
+import { connect } from 'react-redux'
+
+import { 
+    selectBalance, 
+    selectTransactions, 
+    selectMonthlyBudgets, 
+    selectTotalBudget, 
+    selectTotalSpending 
+    } from '../redux/account/account.selectors'
+
 import '../styles/Balance.scss'
-import {currencyFormatter, budgetCalc, spendingCalc} from '../utils'
 
 import AddBox from './AddBox'
 import {ReactComponent as AddButton} from '../images/svg/add-outline.svg'
 
-const Balance = ({loading, addTransaction}) => {
+const Balance = ({balance, totalBudget, totalSpending, loading, addTransaction}) => {
     
-    const {account} = useContext(AccountContext)
-
     const [addItemBox, openAddItemBox] = useState(false)
 
     const handleOpenItemBox = () => {
@@ -21,15 +27,15 @@ const Balance = ({loading, addTransaction}) => {
             <div className="Balance-data">
                 <div className="Balance-item">
                     <span className="Balance-label">Balance</span>
-                    <span className="Balance-amount">{loading ? '-' : currencyFormatter.format(account.currentBalance)}</span>
+                    <span className="Balance-amount">{loading ? '-' : balance}</span>
                 </div>
                 <div className="Balance-item">
                     <span className="Balance-label">Budget</span>
-                    <span className="Balance-amount">{loading ? '-' : budgetCalc(account.monthlyBudget)}</span>
+                    <span className="Balance-amount">{loading ? '-' : totalBudget}</span>
                 </div>
                 <div className="Balance-item">
                     <span className="Balance-label">Spent</span>
-                    <span className="Balance-amount">{loading ? '-' : spendingCalc(account.transactions)}</span>
+                    <span className="Balance-amount">{loading ? '-' : totalSpending}</span>
                 </div>
             </div>
             
@@ -47,4 +53,12 @@ const Balance = ({loading, addTransaction}) => {
     )
 }
 
-export default Balance
+const mapStateToProps = state => ({
+    balance: selectBalance(state),
+    transactions: selectTransactions(state),
+    budgets: selectMonthlyBudgets(state),
+    totalSpending: selectTotalSpending(state),
+    totalBudget: selectTotalBudget(state)
+})
+
+export default connect(mapStateToProps)(Balance)
