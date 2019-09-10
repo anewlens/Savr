@@ -8,6 +8,7 @@ import {
     selectTotalBudget, 
     selectTotalSpending 
     } from '../redux/account/account.selectors'
+import { selectLoading } from '../redux/loading/loading.selectors'
 
 import '../styles/Balance.scss'
 
@@ -58,7 +59,8 @@ const mapStateToProps = state => ({
     transactions: selectTransactions(state),
     budgets: selectMonthlyBudgets(state),
     totalSpending: selectTotalSpending(state),
-    totalBudget: selectTotalBudget(state)
+    totalBudget: selectTotalBudget(state),
+    loading: selectLoading(state)
 })
 
 export default connect(mapStateToProps)(Balance)

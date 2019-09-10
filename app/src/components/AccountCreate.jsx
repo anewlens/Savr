@@ -2,12 +2,14 @@ import React, {useState} from 'react'
 import {connect} from 'react-redux'
 
 import { setAccount } from '../redux/account/account.actions'
+import { selectUser } from '../redux/user/user.selectors'
+import { toggleLoading } from '../redux/loading/loading.actions'
 
 import '../styles/AccountCreate.scss'
 
 import accountServices from '../services/account'
 
-const AccountCreate = ({user, setAccount, setLoading}) => {
+const AccountCreate = ({user, setAccount, toggleLoading}) => {
 
     const [income, setIncome] = useState('')
     const [balance, setBalance] = useState('')
@@ -44,7 +46,7 @@ const AccountCreate = ({user, setAccount, setLoading}) => {
                         .then(res => {
                             console.log('addAccount res', res)
                             setAccount(res)
-                            setLoading(false)
+                            toggleLoading()
                         })
             } 
         } catch(exception) {
@@ -111,8 +113,13 @@ const AccountCreate = ({user, setAccount, setLoading}) => {
     )
 }
 
+const mapStateToProps = state => ({
+    user: selectUser(state)
+  })
+
 const mapDispatchToProps = dispatch => ({
-    setAccount: account => dispatch(setAccount(account))
+    setAccount: account => dispatch(setAccount(account)),
+    toggleLoading: () => dispatch(toggleLoading())
 })
 
-export default connect(null, mapDispatchToProps)(AccountCreate)
+export default connect(mapStateToProps, mapDispatchToProps)(AccountCreate)

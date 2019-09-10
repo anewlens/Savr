@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import { selectTransactions } from '../redux/account/account.selectors'
+import { selectLoading } from '../redux/loading/loading.selectors'
 import '../styles/Transactions.scss'
 import Item from './Item.Transactions'
 
@@ -52,7 +53,8 @@ const Transactions = ({loading, show, transactions}) => {
 }
 
 const mapStateToProps = state => ({
-    transactions: selectTransactions(state)
+    transactions: selectTransactions(state),
+    loading: selectLoading(state)
 })
 
 export default connect(mapStateToProps)(Transactions)

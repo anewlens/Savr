@@ -6,10 +6,12 @@ import accountServices from '../services/account'
 import userServices from '../services/user'
 
 import { setAccount } from '../redux/account/account.actions'
+import { setUser } from '../redux/user/user.actions'
+import { toggleLoading } from '../redux/loading/loading.actions'
 
 import '../styles/Login.scss'
 
-const Login = ({setUser, setAccount, setLoading}) => {
+const Login = ({setUser, setAccount, toggleLoading}) => {
 
     const [view, setView] = useState('login')
     const [username, setUsername] = useState('')
@@ -41,7 +43,7 @@ const Login = ({setUser, setAccount, setLoading}) => {
                     setUser(user)
                     accountServices.setToken(user.token)
                     setAccount(res)
-                    setLoading(false)
+                    toggleLoading()
                 })
         } catch(exception){
             console.log('exception', exception)
@@ -126,7 +128,9 @@ const Login = ({setUser, setAccount, setLoading}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    setAccount: account => dispatch(setAccount(account))
+    setAccount: account => dispatch(setAccount(account)),
+    setUser: user => dispatch(setUser(user)),
+    toggleLoading: () => dispatch(toggleLoading())
 })
 
 export default connect(null, mapDispatchToProps)(Login)

@@ -2,12 +2,13 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 import { selectName } from '../redux/account/account.selectors'
+import { setUser } from '../redux/user/user.actions'
 
 import '../styles/Header.scss'
 
 import Profile from './profile'
 
-const Header = ({setLoggedIn, view, setView, setUser, setLoading}) => {
+const Header = ({ view, setView}) => {
 
     const viewHandler = e => {
         setView(e.target.value)
@@ -42,11 +43,7 @@ const Header = ({setLoggedIn, view, setView, setUser, setLoading}) => {
                     className="Header-nav-links btn-lite">Account</button>
             </nav>
 
-            <Profile 
-                setLoggedIn={setLoggedIn}
-                setUser={setUser}
-                setLoading={setLoading}
-                />
+            <Profile />
             
         </header>
     )
@@ -56,4 +53,8 @@ const mapStateToProps = state => ({
     name: selectName(state)
 })
 
-export default connect(mapStateToProps)(Header)
+const mapDispatchToProps = dispatch => ({
+    setUser: user => dispatch(setUser(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

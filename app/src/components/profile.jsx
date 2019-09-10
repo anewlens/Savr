@@ -3,11 +3,14 @@ import { connect } from 'react-redux'
 
 import { setAccount} from '../redux/account/account.actions'
 import { selectName } from '../redux/account/account.selectors'
+import { setUser } from '../redux/user/user.actions'
+import { toggleLoggedIn } from '../redux/loggedIn/loggedIn.actions'
+import { toggleLoading } from '../redux/loading/loading.actions'
 
 import { ReactComponent as DownArr } from '../images/svg/cheveron-outline-down.svg'
 import { ReactComponent as Xbtn } from '../images/svg/close-outline.svg'
 
-const Profile = ({name, setLoggedIn, setAccount, setUser, setLoading}) => {
+const Profile = ({name, toggleLoggedIn, setAccount, setUser, toggleLoading}) => {
 
     const [open, setOpen] = useState(false)
 
@@ -15,10 +18,10 @@ const Profile = ({name, setLoggedIn, setAccount, setUser, setLoading}) => {
 
     const Logout = async () => {
         await window.localStorage.clear()
-        await setLoggedIn(false)
+        await toggleLoggedIn()
         await setAccount(null)
         await setUser(null)
-        await setLoading(true)
+        await toggleLoading()
     }
 
     return (
@@ -45,7 +48,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setAccount: account => dispatch(setAccount(account))
+    setAccount: account => dispatch(setAccount(account)),
+    setUser: user => dispatch(setUser(user)),
+    toggleLoggedIn: () => dispatch(toggleLoggedIn()),
+    toggleLoading: () => dispatch(toggleLoading())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
