@@ -6,7 +6,7 @@ const INITIAL_STATE = null
 const accountReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case AccountActionTypes.SET_ACCOUNT:
-            return {...action.payload}
+            return action.payload
         
         case AccountActionTypes.ADD_TRANSACTION:
             return {

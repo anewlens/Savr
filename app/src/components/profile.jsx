@@ -4,25 +4,23 @@ import { connect } from 'react-redux'
 import { setAccount} from '../redux/account/account.actions'
 import { selectName } from '../redux/account/account.selectors'
 import { setUser } from '../redux/user/user.actions'
-import { toggleLoggedIn } from '../redux/loggedIn/loggedIn.actions'
 import { toggleLoading } from '../redux/loading/loading.actions'
 
 import { ReactComponent as DownArr } from '../images/svg/cheveron-outline-down.svg'
 import { ReactComponent as Xbtn } from '../images/svg/close-outline.svg'
 
-const Profile = ({name, toggleLoggedIn, setAccount, setUser, toggleLoading}) => {
+const Profile = ({name, setAccount, setUser, toggleLoading}) => {
 
     const [open, setOpen] = useState(false)
 
     const handleOpen = () => setOpen(!open)
 
-    const Logout = async () => {
-        await window.localStorage.clear()
-        await toggleLoggedIn()
-        await setAccount(null)
-        await setUser(null)
-        await toggleLoading()
-    }
+    const Logout = () => {
+         window.localStorage.clear()
+         setUser(null)
+         setAccount(null)
+         toggleLoading()
+}
 
     return (
         <div className="User">
@@ -37,7 +35,7 @@ const Profile = ({name, toggleLoggedIn, setAccount, setUser, toggleLoading}) => 
 
             {open && (
                 <div className="User-dropdown">
-                    <button onClick={Logout} className="User-dropdown-logout">Log out</button>
+                    <button onClick={() => Logout()} className="User-dropdown-logout">Log out</button>
                 </div>
             )}
             
@@ -52,7 +50,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setAccount: account => dispatch(setAccount(account)),
     setUser: user => dispatch(setUser(user)),
-    toggleLoggedIn: () => dispatch(toggleLoggedIn()),
     toggleLoading: () => dispatch(toggleLoading())
 })
 
