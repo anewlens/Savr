@@ -13,18 +13,18 @@ const Transactions = ({loading, show, transactions}) => {
         if (show) {
             setTimeout(() => setRender(true), 200)
         }
-    }, [show]);
+    }, [show])
 
-      const onAnimationEnd = () => {
+    const onAnimationEnd = () => {
         if (!show) setRender(false);
-      };
+    }
+
+    const currentDate = new Date()
 
     if (loading || !shouldRender) {
         return null
     }
     
-    const currentDate = new Date()
-
     return (
         shouldRender && (
             <section 
@@ -39,8 +39,8 @@ const Transactions = ({loading, show, transactions}) => {
                     transactions
                         .slice(0)
                         .reverse()
-                        .map(item => <Item 
-                                        key={item.id}
+                        .map((item, i) => <Item 
+                                        key={i}
                                         vendor={item.vendor}
                                         amount={item.amount}
                                         date={item.date}

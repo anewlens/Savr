@@ -32,24 +32,26 @@ const Login = ({setUser, setAccount, toggleLoading}) => {
 
     const handleLogin = async e => {
         e.preventDefault()
-        console.log('Attempting log in...')
+
         try {
             const user = await loginServices.login({username, password})
+
             await accountServices
                 .getAccount(user)
                 .then(res => {
-                    console.log('Logged in.')
                     window.localStorage.setItem('LoggedInUser', JSON.stringify(user))
                     setUser(user)
                     accountServices.setToken(user.token)
                     setAccount(res)
                     toggleLoading()
                 })
+
         } catch(exception){
-            console.log('exception', exception)
             setErrorMessage('Incorrect username or password.')
+
             setTimeout(() => {
                 setErrorMessage(null)
+
             }, 10000)
         }
     }
@@ -63,20 +65,22 @@ const Login = ({setUser, setAccount, toggleLoading}) => {
                 username,
                 password
             }
+
             await userServices
                     .addUser(user)
                     .then(res => {
-                        console.log(res)
                         window.localStorage.setItem('LoggedInUser', JSON.stringify(res))
                         accountServices.setToken(res.token)
                         setUser(res)
                     })
+
         } catch(exception) {
-            console.log('exception', exception)
             setErrorMessage('Invalid username/password')
+
             setTimeout(() => {
                 setErrorMessage(null)
             }, 10000)
+            
         }
     }
 

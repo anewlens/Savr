@@ -29,6 +29,7 @@ const Profile = ({name, toggleLoggedIn, setAccount, setUser, toggleLoading}) => 
             <h2 className="User-name">
                 {name}
             </h2>
+
             <button onClick={handleOpen} className='User-dropdown-btn'>
                 {!open && <DownArr className='User-dropdown-svg'/>}
                 {open && <Xbtn className='User-dropdown-svg'/>}
@@ -39,6 +40,7 @@ const Profile = ({name, toggleLoggedIn, setAccount, setUser, toggleLoading}) => 
                     <button onClick={Logout} className="User-dropdown-logout">Log out</button>
                 </div>
             )}
+            
         </div>
     )
 }

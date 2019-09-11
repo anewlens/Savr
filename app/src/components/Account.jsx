@@ -9,10 +9,12 @@ import {
         selectTotalBudget} from '../redux/account/account.selectors'
 import {currencyFormatter} from '../utils'
 
-import Item from './Item.Account'
-import '../styles/Account.scss'
 import accountServices from '../services/account'
 import userServices from '../services/user'
+
+import Item from './Item.Account'
+
+import '../styles/Account.scss'
 
 const Account = ({show, totalBudget, name, income, balance, transactions}) => {
 
@@ -70,7 +72,7 @@ const Account = ({show, totalBudget, name, income, balance, transactions}) => {
                     {
                         transactions
                             .filter(item => item.recurring === true)
-                            .map(item => <data className="Account-recurring-item"><label className='Account-label'>{item.vendor}:</label>{currencyFormatter.format(item.amount)}</data>)
+                            .map((item, i) => <data key={i} className="Account-recurring-item"><label className='Account-label'>{item.vendor}:</label>{currencyFormatter.format(item.amount)}</data>)
                     } 
                 </div>
             </div>

@@ -50,7 +50,14 @@ const Item = ({date, amount, vendor, category, recurring}) => {
             </div>
 
             <div className="Transactions-item-right">
-            {recurring ? <div className="Transactions-item-icon"><Recurring className='icon-recurring'/></div> : null}
+                {
+                    recurring 
+                    ? <div className="Transactions-item-icon">
+                        <Recurring className='icon-recurring'/>
+                      </div>
+                    : null
+                }
+
                 <h3 className="Transactions-item-amount">{currencyFormatter.format(amount)}</h3>
             </div>
              

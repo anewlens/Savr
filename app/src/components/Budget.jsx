@@ -22,6 +22,7 @@ const Budget = ({ addBudget, monthlyBudgets, transactions, show}) => {
     const handleNewBudget = () => {
         if (budgetName.length > 0 && budgetAmount.length > 0) {
             const newBudget = {name: budgetName.toLowerCase(), amount: Number(budgetAmount)}
+            
             accountServices
                 .addBudget(newBudget)
                 .then(async res => {
@@ -32,6 +33,9 @@ const Budget = ({ addBudget, monthlyBudgets, transactions, show}) => {
                 })
         }
     }
+    
+    const categorySpending = categoryName => 
+        transactions.filter(item => item.category === categoryName)
 
     useEffect(() => {
         if (show) {
@@ -42,8 +46,6 @@ const Budget = ({ addBudget, monthlyBudgets, transactions, show}) => {
     const onAnimationEnd = () => {
         if (!show) setRender(false);
       }
-
-    const categorySpending = categoryName => transactions.filter(item => item.category === categoryName)
 
     return (
         shouldRender && (
@@ -66,8 +68,9 @@ const Budget = ({ addBudget, monthlyBudgets, transactions, show}) => {
 
                     {
                         monthlyBudgets
-                            .map(category => 
+                            .map((category, i) => 
                                 <Item 
+                                    key={i}
                                     category={category} 
                                     categorySpending={categorySpending} 
                                     budgets={monthlyBudgets} />

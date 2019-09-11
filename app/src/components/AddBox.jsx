@@ -10,8 +10,8 @@ import '../styles/AddBox.scss'
 const AddBox = ({monthlyBudgets, closeBox, addTransaction}) => {
 
     const [vendor, setVendor] = useState('')
-    const [amount, setAmount] = useState(null)
-    const [category, setCategory] = useState(null)
+    const [amount, setAmount] = useState('')
+    const [category, setCategory] = useState('')
     const [recurring, setRecurring] = useState(false)
 
     const handleVendor = e => setVendor(e.target.value)
@@ -29,6 +29,7 @@ const AddBox = ({monthlyBudgets, closeBox, addTransaction}) => {
 
       const handleSubmit = e => {
         e.preventDefault()
+        
         if (vendor && amount && category) {
             addItem({
                 date: new Date().toDateString(),

@@ -15,7 +15,7 @@ import '../styles/Balance.scss'
 import AddBox from './AddBox'
 import {ReactComponent as AddButton} from '../images/svg/add-outline.svg'
 
-const Balance = ({balance, totalBudget, totalSpending, loading, addTransaction}) => {
+const Balance = ({balance, totalBudget, totalSpending, loading}) => {
     
     const [addItemBox, openAddItemBox] = useState(false)
 
