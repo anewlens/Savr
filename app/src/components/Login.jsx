@@ -110,6 +110,8 @@ const Login = ({setUser, setAccount, toggleLoading}) => {
                     value={password} 
                     placeholder='password'/>
 
+                {view === 'login' && <p className="testCredentials">Use 'test' and 'testpw' to see a mock account.</p>}
+
                 {view === 'create' && 
                     <input 
                         className="Login-form-confirmpw Login-input" 
