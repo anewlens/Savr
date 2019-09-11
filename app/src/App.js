@@ -7,8 +7,6 @@ import { setAccount } from './redux/account/account.actions'
 import { selectAccount } from './redux/account/account.selectors'
 import { setUser } from './redux/user/user.actions'
 import { selectUser } from './redux/user/user.selectors'
-import { selectLoggedIn } from './redux/loggedIn/loggedIn.selectors'
-import { toggleLoggedIn } from './redux/loggedIn/loggedIn.actions'
 import { selectLoading } from './redux/loading/loading.selectors'
 import { toggleLoading } from './redux/loading/loading.actions'
 import { selectView } from './redux/view/view.selectors';
@@ -44,7 +42,6 @@ function App({account, loading, toggleLoading, setAccount, user, setUser, view})
         .then(res => {
             setAccount(res)
             toggleLoading(false)
-            toggleLoggedIn()
         })
     }
   }, [])
@@ -77,7 +74,6 @@ function App({account, loading, toggleLoading, setAccount, user, setUser, view})
 const mapStateToProps = state => ({
   account: selectAccount(state),
   user: selectUser(state),
-  loggedIn: selectLoggedIn(state),
   loading: selectLoading(state),
   view: selectView(state)
 })
@@ -85,7 +81,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setAccount: account => dispatch(setAccount(account)),
   setUser: user => dispatch(setUser(user)),
-  toggleLoggedIn: () => dispatch(toggleLoggedIn()),
   toggleLoading: () => dispatch(toggleLoading()),
   setView: view => dispatch(setView(view))
 })
