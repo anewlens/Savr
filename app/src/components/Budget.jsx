@@ -1,16 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
+
 import { selectMonthlyBudgets, selectTransactions } from '../redux/account/account.selectors'
+import { addBudget } from '../redux/account/account.actions'
+
 import Item from '../components/Item.Budget'
 
 import accountServices from '../services/account'
 
 import '../styles/Budget.scss'
 
-const Budget = ({ monthlyBudgets, transactions, show}) => {
+const Budget = ({ addBudget, monthlyBudgets, transactions, show}) => {
 
     const [shouldRender, setRender] = useState(false)
-    const [budgets, setBudgets] = useState(monthlyBudgets)
     const [budgetName, setBudgetName ] = useState('')
     const [budgetAmount, setBudgetAmount ] = useState('')
 
@@ -23,10 +25,8 @@ const Budget = ({ monthlyBudgets, transactions, show}) => {
             accountServices
                 .addBudget(newBudget)
                 .then(async res => {
-                    console.log('budgetRes', res)
-                    await setBudgets([
-                        ...monthlyBudgets, newBudget
-                    ])
+                    console.log(`${res.name} budget added.`)
+                    await addBudget(res)
                     setBudgetAmount('')
                     setBudgetName('')
                 })
@@ -106,4 +106,8 @@ const mapStateToProps = state => ({
     transactions: selectTransactions(state)
 })
 
-export default connect(mapStateToProps)(Budget)
+const mapDisaptchToProps = dispatch => ({
+    addBudget: budget => dispatch(addBudget(budget))
+})
+
+export default connect(mapStateToProps, mapDisaptchToProps)(Budget)

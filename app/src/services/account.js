@@ -8,7 +8,6 @@ const setToken = newToken => {
 }
 
 const getAccount = async req => {
-        console.log('getAccount req', req)
         await setToken(req.token)
         const config = {
             headers: { Authorization: token }
@@ -17,8 +16,6 @@ const getAccount = async req => {
         const request = axios.get(baseUrl, config)
         return request
             .then(response => {
-                console.log('getAccount response', response)
-                console.log('token', req.token)
                 return response.data
             })
             .catch(err => console.log('err', err))

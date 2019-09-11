@@ -14,6 +14,13 @@ const accountReducer = (state = INITIAL_STATE, action) => {
                 currentBalance: state.currentBalance - action.payload.amount,
                 transactions: addTransaction(state.transactions, action.payload)
             }
+        
+        case AccountActionTypes.ADD_BUDGET:
+            return {
+                ...state,
+                monthlyBudget: [...state.monthlyBudget, action.payload]
+            }
+
         default:
             return state
     }
