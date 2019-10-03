@@ -1,64 +1,22 @@
 import React from 'react'
-import {connect} from 'react-redux'
-
-import { selectName } from '../redux/account/account.selectors'
-import { setUser } from '../redux/user/user.actions'
+import { NavLink } from 'react-router-dom'
 
 import '../styles/Header.scss'
 
 import Profile from './profile'
-import { setView } from '../redux/view/view.actions'
-import { selectView } from '../redux/view/view.selectors'
 
-const Header = ({ view, setView}) => {
+const Header = () => (
+    <header className="Header">
+        <h1 className="Header-title">Savr</h1>
+        <nav className="Header-nav">
+            <NavLink to='/home/transactions' className='Header-nav-links btn-lite' activeClassName='Header-nav-selected'>Transactions</NavLink>
+            <NavLink to='/home/budget' className='Header-nav-links btn-lite' activeClassName='Header-nav-selected'>Budget</NavLink>
+            <NavLink to='/home/account' className='Header-nav-links btn-lite' activeClassName='Header-nav-selected'>Account</NavLink>
+        </nav>
 
-    const viewHandler = e => {
-        setView(e.target.value)
-    }
+        <Profile />
+        
+    </header>
+)
 
-    return (
-        <header className="Header">
-            <h1 className="Header-title">Savr</h1>
-            <nav className="Header-nav">
-                <button
-                    onClick={viewHandler}
-                    style={{
-                        color: view === 'transactions' ? 'var(--magenta)' : 'white'
-                    }}
-                    value='transactions'
-                    className="Header-nav-links btn-lite">Transactions</button>
-                
-                <button
-                    onClick={viewHandler}
-                    style={{
-                        color: view === 'budget' ? 'var(--magenta)' : 'white'
-                    }}
-                    value='budget'
-                    className="Header-nav-links btn-lite">Budget</button>
-                
-                <button
-                    onClick={viewHandler}
-                    style={{
-                        color: view === 'account' ? 'var(--magenta)' : 'white'
-                    }}
-                    value='account'
-                    className="Header-nav-links btn-lite">Account</button>
-            </nav>
-
-            <Profile />
-            
-        </header>
-    )
-}
-
-const mapStateToProps = state => ({
-    name: selectName(state),
-    view: selectView(state)
-})
-
-const mapDispatchToProps = dispatch => ({
-    setUser: user => dispatch(setUser(user)),
-    setView: view => dispatch(setView(view))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default Header

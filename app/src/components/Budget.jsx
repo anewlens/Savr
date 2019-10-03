@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
 
 import { selectMonthlyBudgets, selectTransactions } from '../redux/account/account.selectors'
@@ -10,9 +10,8 @@ import accountServices from '../services/account'
 
 import '../styles/Budget.scss'
 
-const Budget = ({ addBudget, monthlyBudgets, transactions, show}) => {
+const Budget = ({ addBudget, monthlyBudgets, transactions}) => {
 
-    const [shouldRender, setRender] = useState(false)
     const [budgetName, setBudgetName ] = useState('')
     const [budgetAmount, setBudgetAmount ] = useState('')
 
@@ -37,25 +36,8 @@ const Budget = ({ addBudget, monthlyBudgets, transactions, show}) => {
     const categorySpending = categoryName => 
         transactions.filter(item => item.category === categoryName)
 
-    useEffect(() => {
-        if (show) {
-            setTimeout(() => setRender(true), 200)
-        };
-      }, [show])
-
-    const onAnimationEnd = () => {
-        if (!show) setRender(false);
-      }
-
     return (
-        shouldRender && (
-        <section 
-            className="Budget container"
-            style={{
-                animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`,
-                zIndex: `${show ? '10' : "100"}`
-            }}
-            onAnimationEnd={onAnimationEnd}>
+        <section className="Budget container">
 
             <h1 className="Budget-title container-title">Budget</h1>
 
@@ -100,7 +82,6 @@ const Budget = ({ addBudget, monthlyBudgets, transactions, show}) => {
                 </div>
 
         </section>
-        )
     )
 }
 

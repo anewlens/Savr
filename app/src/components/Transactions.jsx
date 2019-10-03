@@ -5,50 +5,25 @@ import { selectLoading } from '../redux/loading/loading.selectors'
 import '../styles/Transactions.scss'
 import Item from './Item.Transactions'
 
-const Transactions = ({loading, show, transactions}) => {
-
-    const [shouldRender, setRender] = useState(true)
-
-    useEffect(() => {
-        if (show) {
-            setTimeout(() => setRender(true), 200)
-        }
-    }, [show])
-
-    const onAnimationEnd = () => {
-        if (!show) setRender(false);
-    }
-
+const Transactions = ({loading, transactions}) => {
     const currentDate = new Date()
-
-    if (loading || !shouldRender) {
-        return null
-    }
     
     return (
-        shouldRender && (
-            <section 
-                className="Transactions container"
-                style={{
-                    animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`,
-                    zIndex: `${show ? '10' : "100"}`
-                }}
-                onAnimationEnd={onAnimationEnd}>
-                <h1 className="Transactions-title container-title">{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</h1>
-                {
-                    transactions
-                        .slice(0)
-                        .reverse()
-                        .map((item, i) => <Item 
-                                        key={i}
-                                        vendor={item.vendor}
-                                        amount={item.amount}
-                                        date={item.date}
-                                        category={item.category}
-                                        recurring={item.recurring} />)
-                }
-            </section>
-        )
+        <section className="Transactions container">
+            <h1 className="Transactions-title container-title">{currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}</h1>
+            {
+                transactions
+                    .slice(0)
+                    .reverse()
+                    .map((item, i) => <Item 
+                                    key={i}
+                                    vendor={item.vendor}
+                                    amount={item.amount}
+                                    date={item.date}
+                                    category={item.category}
+                                    recurring={item.recurring} />)
+            }
+        </section>
     )
 }
 

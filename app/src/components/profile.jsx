@@ -1,25 +1,25 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import { setAccount} from '../redux/account/account.actions'
 import { selectName } from '../redux/account/account.selectors'
 import { setUser } from '../redux/user/user.actions'
-import { toggleLoading } from '../redux/loading/loading.actions'
 
 import { ReactComponent as DownArr } from '../images/svg/cheveron-outline-down.svg'
 import { ReactComponent as Xbtn } from '../images/svg/close-outline.svg'
 
-const Profile = ({name, setAccount, setUser, toggleLoading}) => {
+const Profile = ({name, setAccount, setUser, history}) => {
 
     const [open, setOpen] = useState(false)
 
     const handleOpen = () => setOpen(!open)
 
-    const Logout = () => {
-         window.localStorage.clear()
-         setUser(null)
-         setAccount(null)
-         toggleLoading()
+    const Logout = async () => {
+        await history.push('/login') 
+        window.localStorage.clear()
+        setUser(null)
+        setAccount(null)
 }
 
     return (
@@ -50,7 +50,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setAccount: account => dispatch(setAccount(account)),
     setUser: user => dispatch(setUser(user)),
-    toggleLoading: () => dispatch(toggleLoading())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default  withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 
 import {
@@ -16,19 +16,7 @@ import Item from './Item.Account'
 
 import '../styles/Account.scss'
 
-const Account = ({show, totalBudget, name, income, balance, transactions}) => {
-
-    const [shouldRender, setRender] = useState(true)
-
-    useEffect(() => {
-        if (show) {
-            setTimeout(() => setRender(true), 200)
-        }
-      }, [show])
-
-    const onAnimationEnd = () => {
-        if (!show) setRender(false);
-    }
+const Account = ({totalBudget, name, income, balance, transactions}) => {
       
     const editName= newName => {
         userServices.editName({newName: newName})
@@ -37,27 +25,21 @@ const Account = ({show, totalBudget, name, income, balance, transactions}) => {
 
     const editBalance = newAmount => {
         accountServices
-        .editBalance(newAmount.includes('$') 
-        ? {newAmount: Number(newAmount.slice(1))} 
-        : {newAmount: Number(newAmount)})
+            .editBalance(newAmount.includes('$') 
+            ? {newAmount: Number(newAmount.slice(1))} 
+            : {newAmount: Number(newAmount)})
     }
 
     const editIncome = newAmount => {
         accountServices
-        .editIncome(newAmount.includes('$') 
-        ? {newAmount: Number(newAmount.slice(1))} 
-        : {newAmount: Number(newAmount)})
+            .editIncome(newAmount.includes('$') 
+            ? {newAmount: Number(newAmount.slice(1))} 
+            : {newAmount: Number(newAmount)})
     }
 
     return (
-        shouldRender && (
-            <section 
-            className="Account container"
-            style={{
-                animation: `${show ? "slideDown" : "slideUp"} .2s ease forwards`,
-                zIndex: `${show ? '10' : "100"}`
-            }}
-            onAnimationEnd={onAnimationEnd}>
+        <section 
+        className="Account container">
             <h1 className="Account-title container-title">Account</h1>
             <div className="Account-subContainer">
                 <div className="Account-details">
@@ -72,12 +54,18 @@ const Account = ({show, totalBudget, name, income, balance, transactions}) => {
                     {
                         transactions
                             .filter(item => item.recurring === true)
-                            .map((item, i) => <data key={i} className="Account-recurring-item"><label className='Account-label'>{item.vendor}:</label>{currencyFormatter.format(item.amount)}</data>)
+                            .map((item, i) => 
+                                <data key={i} className="Account-recurring-item">
+                                    <label className='Account-label'>
+                                        {item.vendor}:
+                                    </label>
+                                    {currencyFormatter.format(item.amount)}
+                                </data>
+                            )
                     } 
                 </div>
             </div>
         </section>
-        )
     )
 }
 

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import loginServices from '../services/login'
 import accountServices from '../services/account'
@@ -11,7 +12,7 @@ import { toggleLoading } from '../redux/loading/loading.actions'
 
 import '../styles/Login.scss'
 
-const Login = ({setUser, setAccount, toggleLoading}) => {
+const Login = ({setUser, setAccount, history}) => {
 
     const [view, setView] = useState('login')
     const [username, setUsername] = useState('')
@@ -30,6 +31,7 @@ const Login = ({setUser, setAccount, toggleLoading}) => {
         view === 'create' && setView('login')
     }
 
+
     const handleLogin = async e => {
         e.preventDefault()
 
@@ -43,7 +45,7 @@ const Login = ({setUser, setAccount, toggleLoading}) => {
                     setUser(user)
                     accountServices.setToken(user.token)
                     setAccount(res)
-                    toggleLoading()
+                    history.push('/')
                 })
 
         } catch(exception){
@@ -79,8 +81,7 @@ const Login = ({setUser, setAccount, toggleLoading}) => {
 
             setTimeout(() => {
                 setErrorMessage(null)
-            }, 10000)
-            
+            }, 10000) 
         }
     }
 
