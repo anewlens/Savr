@@ -17,6 +17,7 @@ import userServices from './services/user'
 import Loading from './components/Loading.component'
 import Login from './components/Login'
 import AccountCreate from './components/AccountCreate'
+import AccountSetup from './components/AccountSetup'
 import Home from './pages/Home.component'
 
 import './styles/MediaQueries.scss'
@@ -69,6 +70,7 @@ function App({account, loading, toggleLoading, setAccount, setUser}) {
               component={Home} />
               
             <Route path='/account-create' component={AccountCreate} />
+            <Route path='/account-setup' component={AccountSetup} />
           </Switch>
         </Router>
     </div>
