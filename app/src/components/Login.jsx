@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 
 import loginServices from '../services/login'
 import accountServices from '../services/account'
@@ -11,6 +10,8 @@ import { setUser } from '../redux/user/user.actions'
 import { toggleLoading } from '../redux/loading/loading.actions'
 
 import '../styles/Login.scss'
+import TextInput from './Inputs/testInput.component'
+import PWInput from './Inputs/pwInput.component'
 
 const Login = ({setUser, setAccount, history}) => {
 
@@ -21,16 +22,10 @@ const Login = ({setUser, setAccount, history}) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [name, setName] = useState('')
 
-    const handleUsername = e => setUsername(e.target.value)
-    const handlePassword = e => setPassword(e.target.value)
-    const handleName = e => setName(e.target.value)
-    const handleConfirmPW = e => setConfirmPassword(e.target.value)
-
     const handleView = () => {
         view === 'login' && setView('create')
         view === 'create' && setView('login')
     }
-
 
     const handleLogin = async e => {
         e.preventDefault()
@@ -51,10 +46,7 @@ const Login = ({setUser, setAccount, history}) => {
         } catch(exception){
             setErrorMessage('Incorrect username or password.')
 
-            setTimeout(() => {
-                setErrorMessage(null)
-
-            }, 10000)
+            setTimeout(() => {setErrorMessage(null)}, 10000)
         }
     }
 
@@ -74,6 +66,7 @@ const Login = ({setUser, setAccount, history}) => {
                         window.localStorage.setItem('LoggedInUser', JSON.stringify(res))
                         accountServices.setToken(res.token)
                         setUser(res)
+                        history.push('/account-create')
                     })
 
         } catch(exception) {
@@ -89,39 +82,37 @@ const Login = ({setUser, setAccount, history}) => {
         <div className="Login">
             <h1 className="Login-title">Savr</h1>
             <form onSubmit={view === 'login' ? handleLogin : handleCreateUser} className="Login-form">
-            {view === 'create' && 
-                <input 
-                    className="Login-form-name Login-input" 
-                    type="text" 
-                    onChange={handleName}
-                    value={name} 
-                    placeholder='name'/>}
-
-                <input 
+            {
+                view === 'create' && 
+                    <TextInput
+                        className="Login-form-name Login-input" 
+                        onChange={e => setName(e.target.value)}
+                        value={name} 
+                        placeholder='name' />
+            }
+                <TextInput 
                     className="Login-form-username Login-input" 
-                    type="text" 
-                    onChange={handleUsername}
+                    onChange={e => setUsername(e.target.value)}
                     value={username} 
                     placeholder='username'/>
 
-                <input 
+                <PWInput 
                     className="Login-form-password Login-input" 
-                    type="password" 
-                    onChange={handlePassword}
+                    onChange={e => setPassword(e.target.value)}
                     value={password} 
-                    placeholder='password'/>
+                    placeholder='password' />
 
                 {view === 'login' && <p className="testCredentials">Use 'test' and 'testpw' to see a mock account.</p>}
 
                 {view === 'create' && 
-                    <input 
+                    <PWInput 
                         className="Login-form-confirmpw Login-input" 
-                        type="password" 
-                        onChange={handleConfirmPW}
+                        onChange={e => setConfirmPassword(e.target.value)}
                         value={confirmPassword} 
                         placeholder='confirm password'/>}
                 
                 <p className="Login-error">{errorMessage}</p>
+
                 <button className="Login-submit btn-lite">
                     {view === 'create' ? 'Next' : 'Log In'}
                 </button>

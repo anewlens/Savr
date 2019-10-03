@@ -8,19 +8,15 @@ import { toggleLoading } from '../redux/loading/loading.actions'
 import '../styles/AccountCreate.scss'
 
 import accountServices from '../services/account'
+import TextInput from './Inputs/testInput.component'
 
-const AccountCreate = ({user, setAccount, toggleLoading}) => {
+const AccountCreate = ({user, setAccount, history}) => {
 
     const [income, setIncome] = useState('')
     const [balance, setBalance] = useState('')
     const [budgets, setBudgets] = useState([])
     const [budgetName, setBudgetName] = useState('')
     const [budgetAmount, setBudgetAmount] = useState('')
-
-    const handleIncome = e => setIncome(e.target.value)
-    const handleBalance = e => setBalance(e.target.value)
-    const handleBudgetName = e => setBudgetName(e.target.value)
-    const handleBudgetAmount = e => setBudgetAmount(e.target.value)
 
     const handleBudgetAdd = e => {
         if (budgetName.length > 0 && budgetName.length > 0) {
@@ -46,9 +42,9 @@ const AccountCreate = ({user, setAccount, toggleLoading}) => {
                         .then(res => {
                             console.log('addAccount res', res)
                             setAccount(res)
-                            toggleLoading()
+                            history.push('/')
                         })
-            } 
+            }
         } catch(exception) {
             console.log('exception', exception)
         }
@@ -59,18 +55,16 @@ const AccountCreate = ({user, setAccount, toggleLoading}) => {
             <h1 className="AccountCreate-title">Savr</h1>
             <form onSubmit={submitAccount} className="AccountCreate-form">
                 <div className="AccountCreate-form-1">
-                    <input 
-                        type="text" 
+                    <TextInput
                         placeholder='Monthly Income' 
                         value={income} 
-                        onChange={handleIncome} 
-                        className="AccountCreate-form-income AccountCreate-form-input"/>
+                        onChange={e => setIncome(e.target.value)} 
+                        className="AccountCreate-form-income AccountCreate-form-input" />
                     
-                    <input 
-                        type="text" 
+                    <TextInput 
                         placeholder='Current Balance' 
                         value={balance} 
-                        onChange={handleBalance} 
+                        onChange={e => setBalance(e.target.value)} 
                         className="AccountCreate-form-balance AccountCreate-form-input"/>
                 </div>
                 
@@ -85,18 +79,17 @@ const AccountCreate = ({user, setAccount, toggleLoading}) => {
                     })}
 
                     <span className="AccountCreate-form-line">
-                        <input 
-                            type="text" 
+                        <TextInput 
                             placeholder='Budget Category' 
                             value={budgetName} 
-                            onChange={handleBudgetName} 
+                            onChange={e => setBudgetName(e.target.value)} 
                             className="AccountCreate-form-income AccountCreate-form-input"/>
 
                             <input 
                                 type="number" 
                                 placeholder='Budget Amount' 
                                 value={budgetAmount} 
-                                onChange={handleBudgetAmount} 
+                                onChange={e => setBudgetAmount(e.target.value)} 
                                 className="AccountCreate-form-income AccountCreate-form-input"/>
 
                         <button 
@@ -119,7 +112,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     setAccount: account => dispatch(setAccount(account)),
-    toggleLoading: () => dispatch(toggleLoading())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountCreate)
